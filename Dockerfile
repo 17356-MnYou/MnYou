@@ -5,7 +5,7 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /usr/src/server
 COPY . .
-RUN npm install --production
+RUN npm install
 RUN npm run build
 
 # Add lockfile and package.json's of isolated subworkspace
@@ -13,8 +13,10 @@ FROM base AS runner
 RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /usr/src/server
+COPY --from=builder /user/src/server/package.json ./
 COPY --from=builder /usr/src/server/dist ./dist
 COPY --from=builder /usr/src/server/node_modules ./node_modules
+RUN npm install --production
 ENV SERVER_PORT=8080
 
 # Don't run production as root
