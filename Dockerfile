@@ -13,7 +13,7 @@ FROM base AS runner
 RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /usr/src/server
-COPY --from=builder /user/src/server/package.json ./
+COPY --from=builder /usr/src/server/package.json ./
 COPY --from=builder /usr/src/server/dist ./dist
 COPY --from=builder /usr/src/server/node_modules ./node_modules
 RUN npm install --production
