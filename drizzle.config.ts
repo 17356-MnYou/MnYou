@@ -7,7 +7,7 @@ if (!POSTGRES_CONNECTION_STRING) {
 
 export default {
   schema: "./src/db/schema.ts",
-  out: "./src/db/migrations",
+  out: "./drizzle",
   driver: "pg",
   dbCredentials: {
     connectionString: process.env.POSTGRES_CONNECTION_STRING!,
