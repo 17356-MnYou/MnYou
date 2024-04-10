@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+.itemList {
+    height: 200px;
+    display: flex;
+    overflow-x: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.itemList::-webkit-scrollbar {
+    height: 0px;
+}
+
+.header {
+    text-align: left;
+    margin-left: 24px;
+    font-family: poppins;
+    margin-bottom: 0px;
+}
