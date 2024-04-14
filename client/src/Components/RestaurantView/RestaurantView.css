@@ -1,0 +1,44 @@
+.Table {
+  width: 80%;
+  margin: auto;
+  border-collapse: collapse;
+}
+
+.Table th, .Table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.Table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #029FA4;
+  color: white;
+}
+
+.Table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.Table tr:hover {
+  background-color: #ddd;
+}
+
+.Button {
+  background-color: #029FA4;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.small-view {
+  transform: scale(0.5);
+  transform-origin: 0 0;
+}

@@ -1,0 +1,30 @@
+.Menu {
+  width: 80%;
+  margin: auto;
+}
+
+.Menu h2, .Menu h3, .Menu h4 {
+  color: #3DB5B9;
+}
+
+.Menu p {
+  color: #333;
+}
+
+.Menu img {
+  width: 100px;
+  height: 100px;
+}
+
+.Menu .Button {
+  background-color: #029FA4;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
