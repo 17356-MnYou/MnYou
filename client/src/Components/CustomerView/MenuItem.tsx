@@ -7,6 +7,7 @@ interface iMenuItem {
   "description": string; 
   "image": string; 
   "price": number;
+  "ingredients": string[]; 
 }
 
 function MenuItem(props: iMenuItem) {
