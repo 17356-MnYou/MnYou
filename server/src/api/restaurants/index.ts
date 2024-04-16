@@ -26,7 +26,6 @@ router.post("/", async (req: Request, res: Response) => {
 // READ
 router.get("/", async (_, res: Response) => {
   const restaurantList = await db.select().from(restaurants);
-
   return res.status(200).json(restaurantList);
 });
 
