@@ -53,6 +53,21 @@ router.get("/:id", async (req: Request, res: Response) => {
     return res.status(200).json({menu, menu_item_results});
 });
 
-
+router.get("/:mid/:iid", async (req: Request, res: Response) => {
+    const menuId = Number(req.params.mid);
+    const itemId = Number(req.params.iid);
+    
+    if (!menuId || !itemId) {
+        return res.status(500).send("Invalid menu or item");
+    }
+    const [menu_item] = await db
+        .select()
+        .from(menuItems)
+        .where(eq(menuItems.id, itemId) && eq(menuItems.menu, menuId));
+    if (!menu_item) {
+        return res.status(500).send("No menu item found");
+    }
+    return res.status(200).json(menu_item);
+});
 
 export default router;

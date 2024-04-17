@@ -7,6 +7,9 @@ import { varchar, pgTable, serial } from "drizzle-orm/pg-core";
 
 export const restaurants = pgTable("restaurants", {
   id: serial("id").primaryKey(),
+  name: text("name"),
+  address: text("address"),
+  phoneNumber: text("phone_number"),
   username: varchar("username", { length: 256 }).notNull().unique(),
   password: varchar("password_hash", { length: 256 }).notNull(),
   menu: integer("menu").references(() => menus.id),
@@ -62,10 +65,15 @@ export const menuItemRelations = relations(menuItems, ({ one, many }) => ({
 export const sections = pgTable("sections", {
   id: serial("id").primaryKey(),
   name: text("name"),
+  menu: integer("menu").references(() => menus.id),
 });
 
-export const sectionRelations = relations(sections, ({ many }) => ({
+export const sectionRelations = relations(sections, ({ one, many }) => ({
   menuItems: many(menuItems),
+  menu: one(menus, {
+    fields: [sections.menu],
+    references: [menus.id],
+  }),
 }));
 
 export const ingredients = pgTable("ingredients", {
