@@ -1,36 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import Menu, { MenuProps } from './Menu';
 import MenuForm from './MenuForm';
 import './RestaurantView.css';
-import menus from './menus.json';
 
 const RestaurantView: React.FC = () => {
+  const [menus, setMenus] = useState<MenuProps[]>([]);
   const [selectedMenu, setSelectedMenu] = useState<MenuProps | null>(null);
   const [newMenu, setNewMenu] = useState<MenuProps | null>(null);
 
-  const handleMenuClick = (menu: any) => {
-    const convertedMenu: MenuProps = {
-      ...menu,
-      menuItems: menu.menuItems.map((item: any) => ({
-        ...item,
-        price: parseFloat(item.price)
-      }))
+  useEffect(() => {
+    const fetchMenus = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/restaurants');
+        const data = await response.json();
+        console.log(data);
+        setMenus(data); 
+      } catch (error) {
+        console.error('Failed to fetch menus:', error);
+      }
     };
-    setSelectedMenu(convertedMenu);
-  };
 
-  const handleAddMenuClick = () => {
-    setNewMenu({
-      id: menus.length + 1, // Generate a new ID when connect to backend
-      restaurantName: '',
-      restaurantDescription: '',
-      address: '',
-      phoneNumber: '',
-      menuName: '',
-      menuDescription: '',
-      menuItems: [],
-    });
+    fetchMenus();
+  }, []);
+
+  const handleMenuClick = async (menu_id: any) => {
+    try {
+      const response = await fetch(`/api/menus/${menu_id}`);
+      const menu_data = await response.json();
+
+      const convertedMenu: MenuProps = {
+        ...menu_data,
+        menuItems: menu_data.menuItems.map((item: any) => ({
+          ...item,
+          price: parseFloat(item.price)
+        }))
+      };
+      setSelectedMenu(convertedMenu);
+    } catch (error) {
+      console.error('Failed to fetch menu details:', error);
+    }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,8 +49,8 @@ const RestaurantView: React.FC = () => {
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Add the new menu to your backend when available
-    console.log(newMenu);
+    // Submitting the form would typically involve a POST or PUT request here.
+    console.log(newMenu);  // Use this to debug or replace with API call to save.
     setNewMenu(null);
   };
 
@@ -59,34 +68,34 @@ const RestaurantView: React.FC = () => {
           <Table className="Table" striped bordered hover>
             <thead>
               <tr>
-                <th>Restaurant Name</th>
-                <th>Restaurant Description</th>
+                <th>Id</th>
+                <th>Name</th>
                 <th>Address</th>
                 <th>Phone Number</th>
-                <th>Menu Name</th>
-                <th>Menu Description</th>
+                <th>Username</th>
+                <th>Password</th>
                 <th>QR Code</th>
               </tr>
             </thead>
             <tbody>
               {menus.map((menu) => (
-                <tr key={menu.id} onClick={() => handleMenuClick(menu)}>
+                <tr key={menu.id} onClick={() => handleMenuClick(menu.id)}>
+                  <td>{menu.id}</td>
                   <td>{menu.restaurantName}</td>
-                  <td>{menu.restaurantDescription}</td>
                   <td>{menu.address}</td>
                   <td>{menu.phoneNumber}</td>
-                  <td>{menu.menuName}</td>
-                  <td>{menu.menuDescription}</td>
-                  <td>
+                  <td>{menu.ownerUsername}</td>
+                  <td>{menu.ownerPassword}</td>
+                  {/* <td>
                     <a href={menu.qrCodeLink} target="_blank" rel="noopener noreferrer">
                       View
                     </a>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
           </Table>
-          <Button className="Button" onClick={handleAddMenuClick}>Add new menu</Button>
+          {/* <Button className="Button" onClick={handleAddMenuClick}>Add new menu</Button> */}
         </div>
       )}
     </div>

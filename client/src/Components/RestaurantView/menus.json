@@ -2,7 +2,6 @@
     {
       "id": 1,
       "restaurantName": "Restaurant 1",
-      "restaurantDescription": "Description for Restaurant 1",
       "address": "123 Main St",
       "phoneNumber": "123-456-7890",
       "menuName": "Breakfast Menu",
@@ -49,7 +48,6 @@
     {
       "id": 2,
       "restaurantName": "Restaurant 2",
-      "restaurantDescription": "Description for Restaurant 2",
       "address": "456 Market St",
       "phoneNumber": "234-567-8901",
       "menuName": "Lunch Menu",
@@ -96,7 +94,6 @@
     {
       "id": 3,
       "restaurantName": "Restaurant 3",
-      "restaurantDescription": "Description for Restaurant 3",
       "address": "789 Broadway St",
       "phoneNumber": "345-678-9012",
       "menuName": "Dinner Menu",

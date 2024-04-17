@@ -14,23 +14,19 @@ export interface MenuItem {
 export interface MenuProps {
   id: number;
   restaurantName: string;
-  restaurantDescription: string;
   address: string;
   phoneNumber: string;
-  menuName: string;
-  menuDescription: string;
-  menuItems: MenuItem[];
+  ownerUsername: string;
+  ownerPassword: string;
 }
 
 const Menu: React.FC<MenuProps> = ({
   id,
   restaurantName,
-  restaurantDescription,
   address,
   phoneNumber,
-  menuName,
-  menuDescription,
-  menuItems,
+  ownerUsername,
+  ownerPassword,
 }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItem | null>(null);
   const [editedMenuItem, setEditedMenuItem] = useState<MenuItem | null>(null);
@@ -62,11 +58,10 @@ const Menu: React.FC<MenuProps> = ({
   return (
     <div className="Menu">
       <h2>{restaurantName}</h2>
-      <p>{restaurantDescription}</p>
       <p>{address}</p>
       <p>{phoneNumber}</p>
-      <h3>{menuName}</h3>
-      <p>{menuDescription}</p>
+      <h3>{ownerUsername}</h3>
+      <p>{ownerPassword}</p>
       <Button className="Button" onClick={handleAddClick}>Add New Item</Button>
       {selectedMenuItem || editedMenuItem ? (
         <div>
@@ -96,22 +91,20 @@ const Menu: React.FC<MenuProps> = ({
           <thead>
             <tr>
               <th>Name</th>
-              <th>Description</th>
               <th>Image</th>
               <th>Price</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {menuItems.map((menuItem) => (
+            {/* {menuItems.map((menuItem) => (
               <tr key={menuItem.id}>
                 <td>{menuItem.name}</td>
-                <td>{menuItem.description}</td>
                 <td><img src={menuItem.image} alt={menuItem.name} /></td>
                 <td>{menuItem.price}</td>
                 <td><Button className="Button" onClick={() => handleEditClick(menuItem)}>Edit</Button></td>
               </tr>
-            ))}
+            ))} */}
           </tbody>
         </Table>
       )}
