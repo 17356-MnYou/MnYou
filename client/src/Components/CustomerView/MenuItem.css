@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+.menuItemBox { 
+    width: 156px; 
+    height: 183px; 
+    border-radius: 10px;
+    border: solid;
+    border-color: lightgrey;
+    overflow: hidden;
+    flex: none;
+}
+
+.menuItemBox:hover { 
+    width: 156px; 
+    height: 183px; 
+    border-radius: 10px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    overflow: hidden;
+    flex: none;
+    cursor: pointer;
+}
+
+.menuItemImage { 
+    height: 65%; 
+    overflow: hidden;
+}
+
+.menuItemDescription { 
+    font-family: 'Poppins', sans-serif;
+    height: 35%; 
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.menuItemDescription p { 
+    margin-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.foodImage { 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
