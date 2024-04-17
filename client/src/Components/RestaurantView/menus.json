@@ -1,0 +1,143 @@
+[
+    {
+      "id": 1,
+      "restaurantName": "Restaurant 1",
+      "restaurantDescription": "Description for Restaurant 1",
+      "address": "123 Main St",
+      "phoneNumber": "123-456-7890",
+      "menuName": "Breakfast Menu",
+      "menuDescription": "Delicious breakfast items",
+      "qrCodeLink": "https://example.com/qr_codes/restaurant1",
+      "menuItems": [
+        {
+          "id": 0,
+          "name": "Pancakes",
+          "description": "Fluffy pancakes served with maple syrup and butter.",
+          "image": "https://example.com/images/pancakes.jpg",
+          "price": "7.99"
+        },
+        {
+          "id": 1,
+          "name": "French Toast",
+          "description": "Thick slices of bread dipped in a mixture of eggs and milk, then fried until golden brown.",
+          "image": "https://example.com/images/french-toast.jpg",
+          "price": "8.99"
+        },
+        {
+          "id": 2,
+          "name": "Omelette",
+          "description": "Fluffy omelette filled with your choice of ingredients.",
+          "image": "https://example.com/images/omelette.jpg",
+          "price": "9.99"
+        },
+        {
+          "id": 3,
+          "name": "Fried Rice",
+          "description": "Classic fried rice with eggs, green peas, carrots, and green onions, seasoned with soy sauce and sesame oil.",
+          "image": "https://example.com/images/fried_rice.jpg",
+          "price": "10.99"
+        },
+        {
+          "id": 4,
+          "name": "Chicken Parmesan",
+          "description": "Breaded chicken breast topped with marinara sauce and melted mozzarella, served over spaghetti.",
+          "image": "https://example.com/images/chicken_parmesan.jpg",
+          "price": "11.99"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "restaurantName": "Restaurant 2",
+      "restaurantDescription": "Description for Restaurant 2",
+      "address": "456 Market St",
+      "phoneNumber": "234-567-8901",
+      "menuName": "Lunch Menu",
+      "menuDescription": "Tasty lunch items",
+      "qrCodeLink": "https://example.com/qr_codes/restaurant2",
+      "menuItems": [
+        {
+          "id": 0,
+          "name": "Caesar Salad",
+          "description": "Crisp romaine lettuce tossed in Caesar dressing with croutons and shaved Parmesan cheese.",
+          "image": "https://example.com/images/caesar_salad.jpg",
+          "price": "12.99"
+        },
+        {
+          "id": 1,
+          "name": "Margherita Pizza",
+          "description": "Classic Margherita pizza with fresh mozzarella, tomatoes, basil leaves, and a drizzle of olive oil on a thin crust.",
+          "image": "https://example.com/images/margherita_pizza.jpg",
+          "price": "13.99"
+        },
+        {
+          "id": 2,
+          "name": "Pancakes",
+          "description": "Fluffy pancakes served with maple syrup and butter.",
+          "image": "https://example.com/images/pancakes.jpg",
+          "price": "7.99"
+        },
+        {
+          "id": 3,
+          "name": "French Toast",
+          "description": "Thick slices of bread dipped in a mixture of eggs and milk, then fried until golden brown.",
+          "image": "https://example.com/images/french-toast.jpg",
+          "price": "8.99"
+        },
+        {
+          "id": 4,
+          "name": "Omelette",
+          "description": "Fluffy omelette filled with your choice of ingredients.",
+          "image": "https://example.com/images/omelette.jpg",
+          "price": "9.99"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "restaurantName": "Restaurant 3",
+      "restaurantDescription": "Description for Restaurant 3",
+      "address": "789 Broadway St",
+      "phoneNumber": "345-678-9012",
+      "menuName": "Dinner Menu",
+      "menuDescription": "Satisfying dinner items",
+      "qrCodeLink": "https://example.com/qr_codes/restaurant3",
+      "menuItems": [
+        {
+          "id": 0,
+          "name": "Fried Rice",
+          "description": "Classic fried rice with eggs, green peas, carrots, and green onions, seasoned with soy sauce and sesame oil.",
+          "image": "https://example.com/images/fried_rice.jpg",
+          "price": "10.99"
+        },
+        {
+          "id": 1,
+          "name": "Chicken Parmesan",
+          "description": "Breaded chicken breast topped with marinara sauce and melted mozzarella, served over spaghetti.",
+          "image": "https://example.com/images/chicken_parmesan.jpg",
+          "price": "11.99"
+        },
+        {
+          "id": 2,
+          "name": "Caesar Salad",
+          "description": "Crisp romaine lettuce tossed in Caesar dressing with croutons and shaved Parmesan cheese.",
+          "image": "https://example.com/images/caesar_salad.jpg",
+          "price": "12.99"
+        },
+        {
+          "id": 3,
+          "name": "Margherita Pizza",
+          "description": "Classic Margherita pizza with fresh mozzarella, tomatoes, basil leaves, and a drizzle of olive oil on a thin crust.",
+          "image": "https://example.com/images/margherita_pizza.jpg",
+          "price": "13.99"
+        },
+        {
+          "id": 4,
+          "name": "Pancakes",
+          "description": "Fluffy pancakes served with maple syrup and butter.",
+          "image": "https://example.com/images/pancakes.jpg",
+          "price": "7.99"
+        }
+      ]
+    }
+  ]
