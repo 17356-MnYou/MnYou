@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { db } from "../../db";
-import { menus } from "../../db/schema";
-import { eq } from "drizzle-orm";
+import { menus, menuItems } from "../../db/schema";
+import { eq, sql } from "drizzle-orm";
 
 const router = express.Router();
 // CREATE
@@ -43,8 +43,14 @@ router.get("/:id", async (req: Request, res: Response) => {
     if (!menu) {
         return res.status(500).send("No menu found");
     }
-
-    return res.status(200).json(menu);
+    const menu_item_results = await db
+        .select()
+        .from(menuItems)
+        .where(sql`${menuItems.menu} = ${menuId}`);
+    if (!menu_item_results) {
+        return res.status(500).send("No menu items found");
+    }
+    return res.status(200).json({menu, menu_item_results});
 });
 
 
