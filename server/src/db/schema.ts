@@ -45,9 +45,9 @@ export const menuItems = pgTable("menu_items", {
   image: text("image"),
   price: real("price"),
   description: text("description"),
-  isActive: boolean("is_active"),
-  menu: integer("menu").references(() => menus.id),
-  section: integer("section").references(() => sections.id),
+  isActive: boolean("is_active").notNull(),
+  menu: integer("menu").references(() => menus.id).notNull(),
+  section: integer("section").references(() => sections.id).notNull(),
 });
 
 export const menuItemRelations = relations(menuItems, ({ one, many }) => ({

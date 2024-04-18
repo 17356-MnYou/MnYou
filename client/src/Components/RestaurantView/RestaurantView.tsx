@@ -15,12 +15,11 @@ const RestaurantView: React.FC = () => {
         const response = await fetch('http://localhost:3000/api/restaurants');
         const data = await response.json();
         console.log(data);
-        setMenus(data); 
+        setMenus(data);
       } catch (error) {
         console.error('Failed to fetch menus:', error);
       }
     };
-
     fetchMenus();
   }, []);
 
@@ -81,21 +80,21 @@ const RestaurantView: React.FC = () => {
               {menus.map((menu) => (
                 <tr key={menu.id} onClick={() => handleMenuClick(menu.id)}>
                   <td>{menu.id}</td>
-                  <td>{menu.restaurantName}</td>
+                  <td>{menu.name}</td>
                   <td>{menu.address}</td>
                   <td>{menu.phoneNumber}</td>
-                  <td>{menu.ownerUsername}</td>
-                  <td>{menu.ownerPassword}</td>
-                  {/* <td>
-                    <a href={menu.qrCodeLink} target="_blank" rel="noopener noreferrer">
+                  <td>{menu.username}</td>
+                  <td>{menu.password}</td>
+                  <td>
+                    <a href="fuck" target="_blank" rel="noopener noreferrer">
                       View
                     </a>
-                  </td> */}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </Table>
-          {/* <Button className="Button" onClick={handleAddMenuClick}>Add new menu</Button> */}
+          <Button className="Button">Add new menu</Button>
         </div>
       )}
     </div>

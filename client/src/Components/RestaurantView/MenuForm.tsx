@@ -17,7 +17,7 @@ const MenuForm: React.FC<MenuFormProps> = ({ newMenu, handleInputChange, handleF
     <Form onSubmit={handleFormSubmit}>
       <Form.Group>
         <Form.Label>Restaurant Name</Form.Label>
-        <Form.Control type="text" name="restaurantName" value={newMenu.restaurantName} onChange={handleInputChange} />
+        <Form.Control type="text" name="restaurantName" value={newMenu.name} onChange={handleInputChange} />
       </Form.Group>
       <Form.Group>
         <Form.Label>Address</Form.Label>

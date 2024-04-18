@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { db } from "../../db";
 import { menus, menuItems } from "../../db/schema";
-import { eq, sql } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 
 const router = express.Router();
 // CREATE
@@ -46,17 +46,19 @@ router.get("/:id", async (req: Request, res: Response) => {
     const menu_item_results = await db
         .select()
         .from(menuItems)
-        .where(sql`${menuItems.menu} = ${menuId}`);
+        .where(sql`${menuItems.menu} = ${menuId}`)
     if (!menu_item_results) {
         return res.status(500).send("No menu items found");
     }
+    
     return res.status(200).json({menu, menu_item_results});
 });
 
+// Returns a specific menu item given a menu id and item id
 router.get("/:mid/:iid", async (req: Request, res: Response) => {
     const menuId = Number(req.params.mid);
     const itemId = Number(req.params.iid);
-    
+
     if (!menuId || !itemId) {
         return res.status(500).send("Invalid menu or item");
     }
@@ -69,5 +71,8 @@ router.get("/:mid/:iid", async (req: Request, res: Response) => {
     }
     return res.status(200).json(menu_item);
 });
+
+// Returns all menu items by sections
+
 
 export default router;
