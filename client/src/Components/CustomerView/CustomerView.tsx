@@ -7,11 +7,17 @@ function CustomerView() {
 
   const [menuData, setMenuData] = useState<any[]>([]);
 
+  const [storeName, setStoreName] = useState(""); 
+
+  const [storeAddress, setStoreAddress] = useState(""); 
+
   useEffect(() => {
     fetch('http://localhost:3000/api/menus/1')
          .then((response) => response.json())
          .then((data) => {
             setMenuData(data.organizedItems);
+            setStoreName(data.name); 
+            setStoreAddress(data.address);
          })
          .catch((err) => {
             console.log(err.message);
@@ -22,8 +28,8 @@ function CustomerView() {
 
   return (
     <div>
-      <h1>Name of restaurant</h1>
-      <p>Address of restaurant</p>
+      <h1>{storeName}</h1>
+      <p>{storeAddress}</p>
       <div className="line-separator"></div>
       <input
         className="searchBar"
