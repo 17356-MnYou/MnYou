@@ -23,23 +23,26 @@ const RestaurantView: React.FC = () => {
     fetchMenus();
   }, []);
 
-  const handleMenuClick = async (menu_id: any) => {
+  const handleMenuClick = async (menu_id: number) => {
     try {
-      const response = await fetch(`/api/menus/${menu_id}`);
+      const response = await fetch(`http://localhost:3000/api/menus/${menu_id}`);
+      if (!response.ok) throw new Error('Failed to fetch menu details: ' + response.statusText);
       const menu_data = await response.json();
+      console.log(menu_data);
+      setMenus(menu_data);
 
-      const convertedMenu: MenuProps = {
+      const convertedMenu = {
         ...menu_data,
-        menuItems: menu_data.menuItems.map((item: any) => ({
+        menuItems: menu_data.menuItems.map((item: { price: string; }) => ({
           ...item,
           price: parseFloat(item.price)
         }))
       };
       setSelectedMenu(convertedMenu);
-    } catch (error) {
-      console.error('Failed to fetch menu details:', error);
+    } catch (error: any) {
+      console.error(error.message || 'Failed to fetch menu details');
     }
-  };
+  };  
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -74,11 +77,12 @@ const RestaurantView: React.FC = () => {
                 <th>Username</th>
                 <th>Password</th>
                 <th>QR Code</th>
+                <th>View Menu</th>
               </tr>
             </thead>
             <tbody>
               {menus.map((menu) => (
-                <tr key={menu.id} onClick={() => handleMenuClick(menu.id)}>
+                <tr key={menu.id}>  {/* Ensure a unique key for each row */}
                   <td>{menu.id}</td>
                   <td>{menu.name}</td>
                   <td>{menu.address}</td>
@@ -86,9 +90,14 @@ const RestaurantView: React.FC = () => {
                   <td>{menu.username}</td>
                   <td>{menu.password}</td>
                   <td>
-                    <a href="fuck" target="_blank" rel="noopener noreferrer">
+                    {/* <a href={menu.qrCodeLink || "#"} target="_blank" rel="noopener noreferrer">
                       View
-                    </a>
+                    </a> */}
+                  </td>
+                  <td>
+                    <Button className="view-menu-button" onClick={() => handleMenuClick(menu.id)}>
+                      View Menu
+                    </Button>
                   </td>
                 </tr>
               ))}
