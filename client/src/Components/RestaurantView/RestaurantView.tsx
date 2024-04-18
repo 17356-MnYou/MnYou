@@ -51,8 +51,7 @@ const RestaurantView: React.FC = () => {
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Submitting the form would typically involve a POST or PUT request here.
-    console.log(newMenu);  // Use this to debug or replace with API call to save.
+    // Add the new menu to your backend when available
     setNewMenu(null);
   };
 
