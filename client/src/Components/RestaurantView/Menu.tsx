@@ -49,7 +49,6 @@ const Menu: React.FC<MenuProps> = ({
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // Update the menu item in backend when available
-    console.log(editedMenuItem);
     setSelectedMenuItem(null);
     setEditedMenuItem(null);
   };

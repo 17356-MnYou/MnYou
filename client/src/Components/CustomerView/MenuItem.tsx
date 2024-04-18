@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 interface iMenuItem { 
   "key": number;
-  "name": string; 
+  "id": number;
+  "title": string; 
   "description": string; 
   "image": string; 
   "price": number;
@@ -18,15 +19,14 @@ function MenuItem(props: iMenuItem) {
 
 
   function navigateToItemDescription(){ 
-    console.log("navigatetoitemdescription")
-    navigate(`/menuItem/${props.name}`);
+    navigate(`/menuItem/${props.id}`);
   }
 
   return (
     <div className="menuItemBox" onClick={navigateToItemDescription}>
-    <div className="menuItemImage"><img className="foodImage" src={friedRice}></img></div>
+    <div className="menuItemImage"><img className="foodImage" src={''}></img></div>
     <div className="menuItemDescription">
-      {props.name.length > 14 ? <p><b>{props.name.substring(0,14)}...</b></p> : <p><b>{props.name}</b></p>}
+      {props.title.length > 14 ? <p><b>{props.title.substring(0,14)}...</b></p> : <p><b>{props.title}</b></p>}
       <p>${props.price}</p>
     </div>
     </div>

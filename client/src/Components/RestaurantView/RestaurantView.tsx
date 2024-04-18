@@ -41,7 +41,6 @@ const RestaurantView: React.FC = () => {
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // Add the new menu to your backend when available
-    console.log(newMenu);
     setNewMenu(null);
   };
 

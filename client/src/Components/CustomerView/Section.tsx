@@ -4,7 +4,7 @@ import './Section.css';
 
 interface iMenuItem {
     id: number;
-    name: string;
+    title: string;
     description: string;
     image: string;
     price: number;
@@ -12,19 +12,20 @@ interface iMenuItem {
   }
   
   interface SectionProps {
-    title: string; // The name of the section
+    sectionTitle: string; // The title of the section
     items: iMenuItem[]; // The items in this section
   }
   
-function Section({ title, items }: SectionProps) {
+function Section({ sectionTitle, items }: SectionProps) {
   return (
     <div className="menuSection">
-      <h2 className="header">{title}</h2>
+      <h2 className="header">{sectionTitle}</h2>
       <div className="itemList">
         {items.map((item) => (
           <MenuItem
             key={item.id}
-            name={item.name}
+            id={item.id}
+            title={item.title}
             description={item.description}
             image={item.image}
             price={item.price}
