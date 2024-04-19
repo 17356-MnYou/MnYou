@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import Menu, { MenuProps } from './Menu';
-import MenuForm from './MenuForm';
+import RestaurantForm from './MenuForm';
 import QRCode from "react-qr-code";
 import './RestaurantView.css';
 
@@ -76,7 +76,7 @@ const RestaurantView: React.FC = () => {
           <Button className="Button" onClick={() => setSelectedMenu(null)}>Back to list</Button>
         </div>
       ) : newMenu ? (
-        <MenuForm newMenu={newMenu} handleInputChange={handleInputChange} handleFormSubmit={handleFormSubmit} setNewMenu={setNewMenu} />
+        <RestaurantForm/>
       ) : (
         <div>
           <Table className="Table" striped bordered hover>
