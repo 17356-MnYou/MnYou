@@ -7,6 +7,7 @@ import Landing from './Components/Landing';
 import MenuItemDetails from './Components/CustomerView/MenuItemDetails';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
+import './Components/Navbar.css';
 
 function App() {
   return (
