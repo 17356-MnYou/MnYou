@@ -25,6 +25,17 @@ const RestaurantView: React.FC = () => {
     fetchMenus();
   }, []);
 
+  const handleAddMenuClick = () => {
+    setNewMenu({
+      id: menus.length + 1,
+      username: 'example@gmail.com',
+      password: 'secret',
+      name: '',
+      address: '',
+      phoneNumber: '',
+    });
+  };
+
   const handleMenuClick = async (menu_id: number) => {
     try {
       const response = await fetch(`http://localhost:3000/api/menus/${menu_id}`);
@@ -107,7 +118,7 @@ const RestaurantView: React.FC = () => {
               ))}
             </tbody>
           </Table>
-          <Button className="Button">Add new menu</Button>
+          <Button className="Button" onClick={handleAddMenuClick}>Add New Restaurant</Button>
         </div>
       )}
     </div>
