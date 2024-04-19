@@ -15,17 +15,17 @@ const MenuForm: React.FC<MenuFormProps> = ({ newMenu, handleInputChange, handleF
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      <Form.Group>
-        <Form.Label>Restaurant Name</Form.Label>
-        <Form.Control type="text" name="restaurantName" value={newMenu.name} onChange={handleInputChange} />
+      <Form.Group className="form-group-spacing">
+        <Form.Label className="form-label-spacing">Restaurant Name:</Form.Label>
+        <Form.Control className="prettier-input" type="text" name="name" value={newMenu.name} onChange={handleInputChange} />
       </Form.Group>
-      <Form.Group>
-        <Form.Label>Address</Form.Label>
-        <Form.Control type="text" name="address" value={newMenu.address} onChange={handleInputChange} />
+      <Form.Group className="form-group-spacing">
+        <Form.Label className="form-label-spacing">Address:</Form.Label>
+        <Form.Control className="prettier-input" type="text" name="address" value={newMenu.address} onChange={handleInputChange} />
       </Form.Group>
-      <Form.Group>
-        <Form.Label>Phone Number</Form.Label>
-        <Form.Control type="text" name="phoneNumber" value={newMenu.phoneNumber} onChange={handleInputChange} />
+      <Form.Group className="form-group-spacing">
+        <Form.Label className="form-label-spacing">Phone Number:</Form.Label>
+        <Form.Control className="prettier-input" type="text" name="phoneNumber" value={newMenu.phoneNumber} onChange={handleInputChange} />
       </Form.Group>
       <Button className="Button" type="submit">Save</Button>
       <Button className="Button" onClick={() => setNewMenu(null)}>Cancel</Button>
