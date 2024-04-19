@@ -1,0 +1,36 @@
+.custom-navbar {
+    background-color: #029FA4;
+}
+
+.navbar-collapse {
+    justify-content: center;
+}
+
+.custom-logo {
+    filter: brightness(0) invert(1);
+    padding: 1em 2em 1em 2em;
+}
+
+.custom-navbar {
+    background-color: #029FA4;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.custom-navbar .nav-link {
+    color: #029FA4;
+    background-color: #FFF;
+    padding: 1em 1em;
+    margin: 0 10px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 1em;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.custom-navbar .nav-link:hover {
+    background-color: #00676a;
+    color: #ffffff;
+    border-radius: 1em;
+}

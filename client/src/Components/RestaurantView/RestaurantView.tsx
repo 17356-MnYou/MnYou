@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import Menu, { MenuProps } from './Menu';
 import MenuForm from './MenuForm';
+import QRCode from "react-qr-code";
 import './RestaurantView.css';
+
 
 const RestaurantView: React.FC = () => {
   const [menus, setMenus] = useState<MenuProps[]>([]);
@@ -89,9 +91,12 @@ const RestaurantView: React.FC = () => {
                   <td>{menu.username}</td>
                   <td>{menu.password}</td>
                   <td>
-                    {/* <a href={menu.qrCodeLink || "#"} target="_blank" rel="noopener noreferrer">
-                      View
-                    </a> */}
+                      <QRCode
+                        id={'qr' + menu.id}
+                        value={'http://localhost:3000/restaurant/' + menu.id}
+                        size={128}
+                        level={'H'}
+                      />
                   </td>
                   <td>
                     <Button className="view-menu-button" onClick={() => handleMenuClick(menu.id)}>

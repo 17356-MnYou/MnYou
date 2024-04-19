@@ -3,7 +3,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 
 const NavigationBar: React.FC = () => {
   return (
-    <Navbar className="custom-navbar" expand="lg">
+    <Navbar className="custom-navbar bg-body-tertiary" expand="lg">
       <Container>
         <Navbar.Brand href="/">
           <img
@@ -14,6 +14,7 @@ const NavigationBar: React.FC = () => {
             alt="MnYou logo"
           />
         </Navbar.Brand>
+      </Container>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
@@ -21,7 +22,6 @@ const NavigationBar: React.FC = () => {
             <Nav.Link href="/restaurant">Restaurant</Nav.Link>
           </Nav>
         </Navbar.Collapse>
-      </Container>
     </Navbar>
   );
 };
