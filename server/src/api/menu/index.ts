@@ -13,7 +13,6 @@ router.post("/", async (req: Request, res: Response) => {
   const menuData = req.body;
   if (
     !menuData ||
-    !menuData.id ||
     !menuData.primary_font ||
     !menuData.secondary_font ||
     !menuData.primary_font_color ||
@@ -26,22 +25,40 @@ router.post("/", async (req: Request, res: Response) => {
     return res.status(500).send("Invalid menu data");
   }
   try {
-    await db.insert(menus).values({
-      id: menuData.id,
-      primaryFont: menuData.primary_font,
-      secondaryFont: menuData.secondary_font,
-      primaryFontColor: menuData.primary_font_color,
-      secondaryFontColor: menuData.secondary_font_color,
-      backgroundColor: menuData.background_color,
-      orientation: menuData.orientation,
-      name: menuData.name,
-      address: menuData.address,
-    });
+    const menu = await db
+      .insert(menus)
+      .values({
+        id: menuData.id,
+        primaryFont: menuData.primary_font,
+        secondaryFont: menuData.secondary_font,
+        primaryFontColor: menuData.primary_font_color,
+        secondaryFontColor: menuData.secondary_font_color,
+        backgroundColor: menuData.background_color,
+        orientation: menuData.orientation,
+        name: menuData.name,
+        address: menuData.address,
+      })
+      .returning();
+    return res.status(200).send(menu);
   } catch (error) {
     return res.status(500).send(error);
   }
-  return res.status(200);
 });
+
+router.post(
+  "/:id",
+  upload.single("file"),
+  async (req: Request, res: Response) => {
+    const menuItemData = req.body.jsonData
+      ? JSON.parse(req.body.jsonData)
+      : null;
+    if (!menuItemData) {
+      return res.status(400).send("Invalid JSON data");
+    }
+
+    const imageFile = req.file ? req.file.buffer : null;
+  },
+);
 
 // Helpers for read operations
 async function getMenu(menuId: number) {
@@ -123,4 +140,3 @@ router.get("/:mid/:iid", async (req: Request, res: Response) => {
 });
 
 export default router;
-
