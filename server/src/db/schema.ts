@@ -48,7 +48,7 @@ export const menuItems = pgTable("menu_items", {
   id: serial("id").primaryKey(),
   title: text("title"),
   secondaryTitle: text("secondary_title"),
-  image: text("image"),
+  image: bytea("image"),
   price: real("price"),
   description: text("description"),
   isActive: boolean("is_active").notNull(),
@@ -89,7 +89,7 @@ export const sectionRelations = relations(sections, ({ one, many }) => ({
 export const ingredients = pgTable("ingredients", {
   id: serial("id").primaryKey(),
   name: text("name"),
-  image: text("image"),
+  image: bytea("image"),
 });
 
 export const ingredientRelations = relations(ingredients, ({ many }) => ({
