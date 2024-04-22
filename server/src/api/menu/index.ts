@@ -10,6 +10,8 @@ const upload = multer();
 
 // CREATE
 router.post("/", async (req: Request, res: Response) => {
+  // don't need to check for id because postres will automatically generate an incrementing id
+  // NOTE: this is not best practice for security reasons but I'm lazy
   const menuData = req.body;
   if (
     !menuData ||
@@ -28,7 +30,6 @@ router.post("/", async (req: Request, res: Response) => {
     const menu = await db
       .insert(menus)
       .values({
-        id: menuData.id,
         primaryFont: menuData.primary_font,
         secondaryFont: menuData.secondary_font,
         primaryFontColor: menuData.primary_font_color,
@@ -39,6 +40,10 @@ router.post("/", async (req: Request, res: Response) => {
         address: menuData.address,
       })
       .returning();
+    // return the inserted menu so that the front end can store the menu id somewhere after
+    // creating a new menu
+    // NOTE: again there are better methods of doing this, but this is the easiest way of data
+    // management between front and back end
     return res.status(200).send(menu);
   } catch (error) {
     return res.status(500).send(error);
@@ -55,8 +60,39 @@ router.post(
     if (!menuItemData) {
       return res.status(400).send("Invalid JSON data");
     }
+    if (
+      !menuItemData.title ||
+      !menuItemData.secondaryTitle ||
+      !menuItemData.price ||
+      !menuItemData.description ||
+      !menuItemData.isActive ||
+      !menuItemData.menu ||
+      !menuItemData.section
+    ) {
+      return res
+        .status(400)
+        .send("Not enough information to create a menu item");
+    }
 
     const imageFile = req.file ? req.file.buffer : null;
+    try {
+      const menuItem = await db
+        .insert(menuItems)
+        .values({
+          title: menuItemData.title,
+          secondaryTitle: menuItemData.secondaryTitle,
+          image: imageFile,
+          price: menuItemData.price,
+          description: menuItemData.description,
+          isActive: menuItemData.isActive,
+          menu: menuItemData.menu,
+          section: menuItemData.section,
+        })
+        .returning();
+      return res.status(200).send(menuItem);
+    } catch (error) {
+      return res.status(500).send(error);
+    }
   },
 );
 
