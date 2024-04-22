@@ -9,7 +9,7 @@ const router = express.Router();
 const upload = multer();
 
 // CREATE
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", upload.none(), async (req: Request, res: Response) => {
   // don't need to check for id because postres will automatically generate an incrementing id
   // NOTE: this is not best practice for security reasons but I'm lazy
   const menuData = req.body;
@@ -54,9 +54,7 @@ router.post(
   "/:id",
   upload.single("file"),
   async (req: Request, res: Response) => {
-    const menuItemData = req.body.jsonData
-      ? JSON.parse(req.body.jsonData)
-      : null;
+    const menuItemData = req.body;
     if (!menuItemData) {
       return res.status(400).send("Invalid JSON data");
     }
