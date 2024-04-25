@@ -54,3 +54,10 @@ button {
     padding-bottom: 5px;
     max-width: 300px;
 }
+
+.buttonContainer { 
+    display: flex;
+    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

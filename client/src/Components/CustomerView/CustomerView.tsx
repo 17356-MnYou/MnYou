@@ -1,6 +1,9 @@
 import Section from './Section';
 import './CustomerView.css';
+
 import { useEffect, useState } from 'react';
+import { Dialog, DialogTitle } from '@mui/material';
+import FilterButton from './FilterButton';
 
 
 function CustomerView() {
@@ -10,6 +13,20 @@ function CustomerView() {
   const [storeName, setStoreName] = useState(""); 
 
   const [storeAddress, setStoreAddress] = useState(""); 
+
+  const [open, setOpen] = useState(false); 
+
+  const [filters, setFilters] = useState([]);
+
+  const dietaryPreferences = ['vegan', 'vegetarian', 'pescetarian', 'dairy free', 'gluten free']
+
+  function handleClose() { 
+    setOpen(false);
+  }
+
+  function handleOpen() { 
+    setOpen(true);
+  }
 
   useEffect(() => {
     fetch('http://localhost:3000/api/menus/1')
@@ -28,6 +45,16 @@ function CustomerView() {
 
   return (
     <div>
+    <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>Select filters</DialogTitle>
+      <div className="buttonContainer">
+      {dietaryPreferences.map((option, index) => { 
+        return <FilterButton key="index" name={option}/>
+      })}
+      </div>
+      <button>Set filter</button>
+    </Dialog>
+    <div>
       <h1>{storeName}</h1>
       <p>{storeAddress}</p>
       <div className="line-separator"></div>
@@ -40,11 +67,12 @@ function CustomerView() {
       />
       <div className="filterContainer">
         <button className="buttonFilled">Vegan</button>
-        <button>+ Filter</button>
+        <button onClick={handleOpen}>+ Filter</button>
       </div>
       {menuData ? menuData.map((item: any) => (
         <Section key={item.section_name} sectionTitle={item.section_name} items={item.items} />
       )) : <p>Loading menu...</p>}
+    </div>
     </div>
   );
 }
