@@ -5,28 +5,48 @@ import './Menu.css';
 
 export interface MenuItem {
   id: number;
-  name: string;
-  description: string;
+  title: string;
+  secondaryTitle: string;
   image: string;
   price: number;
+  description: string;
+  isActive: boolean;
+  menu: number;
+  section: number;
+}
+
+export interface MenuSection {
+  section_name: string;
+  items: MenuItem[];
 }
 
 export interface MenuProps {
   id: number;
-  name: string;
-  address: string;
   phoneNumber: string;
   username: string;
   password: string;
+  primaryFont: string;
+  secondaryFont: string;
+  primaryFontColor: string;
+  secondaryFontColor: string;
+  backgroundColor: string;
+  orientation: number;
+  name: string;
+  address: string;
+  organizedItems: MenuSection[];
 }
 
 const Menu: React.FC<MenuProps> = ({
   id,
+  primaryFont,
+  secondaryFont,
+  primaryFontColor,
+  secondaryFontColor,
+  backgroundColor,
+  orientation,
   name,
   address,
-  phoneNumber,
-  username,
-  password,
+  organizedItems,
 }) => {
   const [editedMenuItem, setEditedMenuItem] = useState<MenuItem | null>(null);
 
@@ -54,7 +74,7 @@ const Menu: React.FC<MenuProps> = ({
   };
 
   const handleAddClick = () => {
-    const newItem = { id: Date.now(), name: '', description: '', image: '', price: 0 };
+    const newItem = { id: Date.now(), title: '', secondaryTitle: '', image: '', price: 0, description: '', isActive: true, menu: id, section: 1 };
     setEditedMenuItem(newItem);
   };
 
@@ -62,13 +82,11 @@ const Menu: React.FC<MenuProps> = ({
     <div className="Menu">
       <h2>{name}</h2>
       <p>{address}</p>
-      <p>{phoneNumber}</p>
-      <Button className="Button" onClick={handleAddClick}>Add New Item</Button>
       {editedMenuItem ? (
         <Form onSubmit={handleFormSubmit}>
           <Form.Group>
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" name="name" value={editedMenuItem.name} onChange={handleInputChange} required />
+            <Form.Control type="text" name="title" value={editedMenuItem.title} onChange={handleInputChange} required />
           </Form.Group>
           <Form.Group>
             <Form.Label>Description</Form.Label>
@@ -86,7 +104,7 @@ const Menu: React.FC<MenuProps> = ({
           <Button onClick={handleCancel}>Cancel</Button>
         </Form>
       ) : (
-        <Table striped bordered hover>
+        <Table className="Table" striped bordered hover>
           <thead>
             <tr>
               <th>Name</th>
@@ -95,19 +113,27 @@ const Menu: React.FC<MenuProps> = ({
               <th>Action</th>
             </tr>
           </thead>
-          {/* <tbody>
-            {menuItems.map((menuItem) => (
-              <tr key={menuItem.id}>
-                <td>{menuItem.name}</td>
-                <td><img src={menuItem.image} alt={menuItem.name} style={{ width: '100px' }} /></td>
-                <td>${menuItem.price.toFixed(2)}</td>
-                <td><Button onClick={() => handleEditClick(menuItem)}>Edit</Button></td>
-              </tr>
-            ))}
-          </tbody> */}
+          <tbody>
+            {organizedItems.map((section) =>
+              section.items.map((menuItem) => (
+                <tr key={menuItem.id}>
+                  <td>{menuItem.title}</td>
+                  <td><img src={menuItem.image} alt={menuItem.title} style={{ width: '100px' }} /></td>
+                  <td>${menuItem.price.toFixed(2)}</td>
+                  <td><Button onClick={() => handleEditClick(menuItem)}>Edit</Button></td>
+                </tr>
+              ))
+            )}
+          </tbody>
         </Table>
       )}
-      <CustomerView />
+      <Button className="Button" onClick={handleAddClick}>Add New Item</Button>
+      
+      <div className="customer-view-container">
+        <h2>Customer View</h2>
+        <CustomerView />
+        <Button className="floating-button Button">Edit</Button>
+      </div>
     </div>
   );
 };
