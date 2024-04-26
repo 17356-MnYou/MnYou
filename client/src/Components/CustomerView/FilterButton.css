@@ -6,6 +6,7 @@ button {
     border-radius: 50px;
     width: fit-content;
     height: fit-content;
+    cursor: pointer;
 }
 
 .buttonFilled { 
