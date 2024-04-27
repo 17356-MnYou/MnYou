@@ -8,6 +8,13 @@ import FilterButton from './FilterButton';
 
 function CustomerView() {
 
+  interface DietaryOptions {
+    'vegan'?: string[];
+    'vegetarian'?: string[];
+    'pescetarian'?: string[];
+    'dairy free'?: string[];
+  };
+
   const [menuData, setMenuData] = useState<any[]>([]);
 
   const [filteredMenuItems, setFilteredMenuItems] = useState<any[]>([]); 
@@ -30,12 +37,16 @@ function CustomerView() {
 
   const dietaryPreferences = ['vegan', 'vegetarian', 'pescetarian', 'dairy free', 'gluten free']
 
-  const dietaryDetails = [{'vegan': ['meat', 'chicken', 'beef', 'fish', 'cheese']}, 
-                          {'vegetarian': ['meat', 'chicken', 'beef', 'fish']},
-                          {'pescetarian': ['fish']},
-                          {'dairy free': ['cheese', 'milk', 'yogurt']}
-  ]
+  interface FilterDetails {
+    [key: string]: string[];
+  }
 
+  const filterDetails: FilterDetails = {
+    vegan: ['meat', 'chicken', 'beef', 'fish', 'cheese', 'rice'],
+    vegetarian: ['meat', 'chicken', 'beef', 'fish'],
+    pescetarian: ['meat', 'chicken', 'beef'],
+    dairyFree: ['cheese', 'milk', 'yogurt']
+  };
   const ingredientPreferences = ['no olives', 'no broccoli', 'no eggs', 'no cabbage', 'no peppers']
 
 
@@ -76,9 +87,18 @@ function CustomerView() {
       ...section,
       items: section.items.filter((item: { title: string; }) => item.title?.toLowerCase().includes(search.toLowerCase()))
     })).filter(section => section.items.length > 0);
-    console.log("Filtered: ", filtered);
     setFilteredMenuItems(filtered);
   }, [search, menuData]);  
+
+  //for when we have ingredients
+  // useEffect(() => {
+  //   console.log("example: ", filterDetails.vegan.includes('meat'));
+  //   const filtered = menuData.map(section => ({
+  //     ...section,
+  //     items: section.items.filter((item: { title: string; }) => filterDetails.vegan.includes(item.title?.toLowerCase()))
+  //   })).filter(section => section.items.length > 0);
+  //   setFilteredMenuItems(filtered);
+  // }, [filters, menuData]);
 
 
   return (
