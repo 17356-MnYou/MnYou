@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import Navbar from '../Navbar';
 import Menu, { MenuProps } from './Menu';
 import RestaurantForm from './MenuForm';
 import QRCode from "react-qr-code";
@@ -33,6 +34,13 @@ const RestaurantView: React.FC = () => {
       name: '',
       address: '',
       phoneNumber: '',
+      primaryFont: '',
+      secondaryFont: '',
+      primaryFontColor: '',
+      secondaryFontColor: '',
+      backgroundColor: '',
+      orientation: 0,
+      organizedItems: [],
     });
   };
 
@@ -43,19 +51,26 @@ const RestaurantView: React.FC = () => {
       const menu_data = await response.json();
       console.log(menu_data);
       setMenus(menu_data);
-
-      const convertedMenu = {
-        ...menu_data,
-        menuItems: menu_data.menuItems.map((item: { price: string; }) => ({
-          ...item,
-          price: parseFloat(item.price)
-        }))
-      };
-      setSelectedMenu(convertedMenu);
+  
+      if (Array.isArray(menu_data.organizedItems)) {
+        const convertedMenu = {
+          ...menu_data,
+          organizedItems: menu_data.organizedItems.map((section: any) => ({
+            ...section,
+            items: section.items.map((item: any) => ({
+              ...item,
+              price: parseFloat(item.price)
+            }))
+          }))
+        };
+        setSelectedMenu(convertedMenu);
+      } else {
+        console.error('menu_data.organizedItems is not an array:', menu_data.organizedItems);
+      }
     } catch (error: any) {
       console.error(error.message || 'Failed to fetch menu details');
     }
-  };  
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -70,6 +85,7 @@ const RestaurantView: React.FC = () => {
 
   return (
     <div>
+      <Navbar />
       {selectedMenu ? (
         <div>
           <Menu {...selectedMenu} />

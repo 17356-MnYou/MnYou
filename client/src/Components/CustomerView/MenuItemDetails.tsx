@@ -11,7 +11,13 @@ interface iDetails {
   image: string; 
 }
 
-function MenuItemDetails() {
+interface iStyle { 
+  style: {
+    primaryFont: string; secondaryFont: string; primaryFontColor: string; secondaryFontColor: string; backgroundColor: string;
+  }
+}
+
+function MenuItemDetails(props: iStyle) {
   let { menuItemId } = useParams();
 
   const [details, setDetails] = useState<iDetails>({
@@ -41,12 +47,12 @@ function MenuItemDetails() {
   }, []);
 
   return (
-    <div>
+    <div style={{textAlign: 'left', fontFamily: props.style.primaryFont, backgroundColor: props.style.backgroundColor, color: props.style.primaryFontColor}}>
       <h1>{details.title}</h1>
       <p>{details.secondaryTitle}</p>
       <img src={details.image}></img>
       <p>${details.price}</p>
-      <p><i>{details.description}</i></p>
+      <p style={{color: props.style.secondaryFontColor}}><i>{details.description}</i></p>
     </div>
   );
 }
