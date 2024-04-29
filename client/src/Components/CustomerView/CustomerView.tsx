@@ -119,11 +119,11 @@ function CustomerView() {
       />
       <div className="filterContainer">
         {filters.map((filterName) => { 
-          return <button style={{ background: storeStyle.secondaryFontColor }}>{filterName}</button>
+          return <button key={filterName} style={{ background: storeStyle.secondaryFontColor }}>{filterName}</button>
         })}
         <button onClick={handleOpen}>+ Filter</button>
       </div>
-      {filteredMenuItems ? filteredMenuItems.map((item: any) => (
+      {filteredMenuItems ? filteredMenuItems.map((item: any, index) => (
         <Section key={item.section_name} sectionTitle={item.section_name} items={item.items} />
       )) : <p>Loading menu...</p>}
     </div>
