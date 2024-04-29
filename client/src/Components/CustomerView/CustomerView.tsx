@@ -1,6 +1,6 @@
 import Section from './Section';
 import './CustomerView.css';
-
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Dialog, DialogTitle } from '@mui/material';
 import FilterButton from './FilterButton';
@@ -58,8 +58,10 @@ function CustomerView() {
     setOpen(true);
   }
 
+  const { menuId } = useParams();
+
   useEffect(() => {
-    fetch('http://localhost:3000/api/menus/1')
+    fetch(`http://localhost:3000/api/menus/${menuId}`)
          .then((response) => response.json())
          .then((data) => {
             setMenuData(data.organizedItems);
@@ -77,7 +79,7 @@ function CustomerView() {
          .catch((err) => {
             console.log(err.message);
          });
-  }, []);
+  }, [menuId]);
 
   const [search, setSearch] = useState('');
 
