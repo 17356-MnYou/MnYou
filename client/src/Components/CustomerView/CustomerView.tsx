@@ -72,7 +72,6 @@ function CustomerView() {
               secondaryFontColor: data.secondaryFontColor,
               backgroundColor: data.backgroundColor
             });
-            console.log("RESPONSEL ", data);
             setFilteredMenuItems(data.organizedItems);
          })
          .catch((err) => {
@@ -89,17 +88,6 @@ function CustomerView() {
     })).filter(section => section.items.length > 0);
     setFilteredMenuItems(filtered);
   }, [search, menuData]);  
-
-  //for when we have ingredients
-  // useEffect(() => {
-  //   console.log("example: ", filterDetails.vegan.includes('meat'));
-  //   const filtered = menuData.map(section => ({
-  //     ...section,
-  //     items: section.items.filter((item: { title: string; }) => filterDetails.vegan.includes(item.title?.toLowerCase()))
-  //   })).filter(section => section.items.length > 0);
-  //   setFilteredMenuItems(filtered);
-  // }, [filters, menuData]);
-
 
   return (
     <div>
