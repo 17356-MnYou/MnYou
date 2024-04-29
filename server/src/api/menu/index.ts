@@ -113,4 +113,26 @@ router.get("/:mid/:iid", async (req: Request, res: Response) => {
     return res.status(200).json(menu_item);
 });
 
+router.patch("/:id", async (req: Request, res: Response) => {
+    const id = Number(req.params.id);
+    const menuData = req.body;
+  
+    const updatedFields: { [key: string]: any } = {};
+    const validFields = ['primary_font', 'secondary_font', 'primary_font_color', 'secondary_font_color', 'background_color', 'orientation', 'name', 'address'];
+    for (let field of validFields) {
+      if (field in menuData) {
+        updatedFields[field] = menuData[field];
+      }
+    }
+  
+    try {
+      await db.update(menus)
+        .set(updatedFields)
+        .where(eq(menus.id, id));
+      res.status(200).send("Menu updated successfully");
+    } catch (error) {
+      res.status(500).send("Failed to update menu");
+    }
+  });
+
 export default router;
