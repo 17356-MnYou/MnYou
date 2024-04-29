@@ -1,0 +1,15 @@
+button { 
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 50px;
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+}
+
+.buttonFilled { 
+    background-color: #029FA4;
+    color: white;
+}

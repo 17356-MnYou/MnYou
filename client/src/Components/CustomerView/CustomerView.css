@@ -54,3 +54,36 @@ button {
     padding-bottom: 5px;
     max-width: 300px;
 }
+
+.buttonContainer { 
+    display: flex;
+    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+p { 
+    align-items: left;
+}
+
+.largeButton { 
+    border-radius: 8px;
+    height: 40px;
+    background: white;
+    border: solid;
+    border-color: #029FA4;
+    color: #029FA4;
+}
+
+
+.MuiDialog-paper { 
+    gap: 32px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    padding: 10px;
+}

@@ -1,8 +1,8 @@
-// RestaurantView.tsx
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import Navbar from '../Navbar';
 import { useNavigate } from 'react-router-dom';
-import Menu, { MenuProps } from './Menu';
+import { MenuProps } from './Menu';
 import RestaurantForm from './MenuForm';
 import QRCode from "react-qr-code";
 import './RestaurantView.css';
@@ -48,19 +48,9 @@ const RestaurantView: React.FC = () => {
     navigate(`/restaurant/${menu_id}`);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setNewMenu(prevState => prevState ? { ...prevState, [name]: value } : null);
-  };
-
-  const handleFormSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // Add the new menu to your backend when available
-    setNewMenu(null);
-  };
-
   return (
     <div>
+      <Navbar />
       {newMenu ? (
         <RestaurantForm/>
       ) : (

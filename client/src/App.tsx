@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CustomerView from './Components/CustomerView/CustomerView';
@@ -11,14 +11,39 @@ import Footer from './Components/Footer';
 import './Components/Navbar.css';
 
 function App() {
+  const [storeStyle, setStoreStyle] = useState({
+    primaryFont: '',
+    secondaryFont: '',
+    primaryFontColor: '',
+    secondaryFontColor: '',
+    backgroundColor: ''
+  });
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/menus/1')
+         .then((response) => response.json())
+         .then((data) => {
+            setStoreStyle({
+              primaryFont: data.primaryFont,
+              secondaryFont: data.secondaryFont,
+              primaryFontColor: data.primaryFontColor,
+              secondaryFontColor: data.secondaryFontColor,
+              backgroundColor: data.backgroundColor
+            });
+         })
+         .catch((err) => {
+            console.log(err.message);
+         });
+  }, []);
+  
   return (
     <div className="App">
-      <Navbar />
+      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="customer" element={<CustomerView />} />
-          <Route path="/menuItem/:menuItemId" element={<MenuItemDetails />} />
+          <Route path="/menuItem/:menuItemId" element={<MenuItemDetails style={storeStyle}/>} />
           <Route path="restaurant" element={<RestaurantView />} />
           <Route path="restaurant/:menu_id" element={<MenuDetails />} />
         </Routes>
