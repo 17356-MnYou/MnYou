@@ -49,6 +49,14 @@ const Menu: React.FC<MenuProps> = ({
   organizedItems,
 }) => {
   const [editedMenuItem, setEditedMenuItem] = useState<MenuItem | null>(null);
+  const [color, setColor] = useState<string>(localStorage.getItem('backgroundColor') || backgroundColor);
+  const [font, setFont] = useState<string>(localStorage.getItem('primaryFont') || primaryFont);
+  const [secondaryFontState, setSecondaryFont] = useState<string>(localStorage.getItem('secondaryFont') || secondaryFont);
+  const [primaryFontColorState, setPrimaryFontColor] = useState<string>(localStorage.getItem('primaryFontColor') || primaryFontColor);
+  const [secondaryFontColorState, setSecondaryFontColor] = useState<string>(localStorage.getItem('secondaryFontColor') || secondaryFontColor);
+  const [orientationState, setOrientation] = useState<number>(localStorage.getItem('orientation') ? Number(localStorage.getItem('orientation')) : orientation);
+  const [nameState, setName] = useState<string>(localStorage.getItem('name') || name);
+  const [addressState, setAddress] = useState<string>(localStorage.getItem('address') || address);
 
   const handleEditClick = (menuItem: MenuItem) => {
     setEditedMenuItem(menuItem);
@@ -78,10 +86,111 @@ const Menu: React.FC<MenuProps> = ({
     setEditedMenuItem(newItem);
   };
 
+  const handleSaveSettings = async () => {
+    const response = await fetch(`http://localhost:3000/api/menus/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        primaryFont: font,
+        secondaryFont: secondaryFontState,
+        primaryFontColor: primaryFontColorState,
+        secondaryFontColor: secondaryFontColorState,
+        backgroundColor: color,
+        orientation: orientationState,
+        name: nameState,
+        address: addressState,
+      }),
+    });
+
+    if (response.ok) {
+      // Update the state to reflect the new settings
+      setFont(font);
+      setSecondaryFont(secondaryFontState);
+      setPrimaryFontColor(primaryFontColorState);
+      setSecondaryFontColor(secondaryFontColorState);
+      setColor(color);
+      setOrientation(orientationState);
+      setName(nameState);
+      setAddress(addressState);
+      
+      localStorage.setItem('backgroundColor', color);
+      localStorage.setItem('primaryFont', font);
+      localStorage.setItem('secondaryFont', secondaryFontState);
+      localStorage.setItem('primaryFontColor', primaryFontColorState);
+      localStorage.setItem('secondaryFontColor', secondaryFontColorState);
+      localStorage.setItem('orientation', orientationState.toString());
+      localStorage.setItem('name', nameState);
+      localStorage.setItem('address', addressState);
+      alert('Settings saved successfully!');
+    } else {
+      console.error('Failed to save settings:', await response.text());
+    }
+  };
+
   return (
     <div className="Menu">
       <h2>{name}</h2>
       <p>{address}</p>
+
+      <div className="settings-and-view-container">
+        <div>
+          <h2 className="centered-title">Customer View</h2>
+          <div className="customer-view-container" style={{ backgroundColor: color, fontFamily: font }}>
+            <CustomerView />
+            <Button className="floating-button Button">Edit</Button>
+          </div>
+        </div>
+
+        <div className="settings">
+          <h2>Settings</h2>
+          <label>
+            Primary Font:
+            <select value={font} onChange={(e) => setFont(e.target.value)}>
+              <option value="Arial">Arial</option>
+              <option value="Verdana">Verdana</option>
+              <option value="Courier New">Courier New</option>
+            </select>
+          </label>
+          <label>
+            Secondary Font:
+            <select value={secondaryFontState} onChange={(e) => setSecondaryFont(e.target.value)}>
+              <option value="Arial">Arial</option>
+              <option value="Verdana">Verdana</option>
+              <option value="Courier New">Courier New</option>
+            </select>
+          </label>
+          <label>
+            Primary Font Color:
+            <input type="color" value={primaryFontColorState} onChange={(e) => setPrimaryFontColor(e.target.value)} />
+          </label>
+          <label>
+            Secondary Font Color:
+            <input type="color" value={secondaryFontColorState} onChange={(e) => setSecondaryFontColor(e.target.value)} />
+          </label>
+          <label>
+            Background Color:
+            <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+          </label>
+          <label>
+            Orientation:
+            <input type="number" value={orientationState} onChange={(e) => setOrientation(Number(e.target.value))} />
+          </label>
+          <label>
+            Name:
+            <input type="text" value={nameState} onChange={(e) => setName(e.target.value)} />
+          </label>
+          <label>
+            Address:
+            <input type="text" value={addressState} onChange={(e) => setAddress(e.target.value)} />
+          </label>
+          <div className="save-settings-button-container">
+            <Button className="Button" onClick={handleSaveSettings}>Save Settings</Button>
+          </div>
+        </div>
+      </div>
+      
       {editedMenuItem ? (
         <Form onSubmit={handleFormSubmit}>
           <Form.Group>
@@ -128,12 +237,6 @@ const Menu: React.FC<MenuProps> = ({
         </Table>
       )}
       <Button className="Button" onClick={handleAddClick}>Add New Item</Button>
-      
-      <div className="customer-view-container">
-        <h2>Customer View</h2>
-        <CustomerView />
-        <Button className="floating-button Button">Edit</Button>
-      </div>
     </div>
   );
 };

@@ -1,14 +1,15 @@
+// RestaurantView.tsx
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import Menu, { MenuProps } from './Menu';
 import RestaurantForm from './MenuForm';
 import QRCode from "react-qr-code";
 import './RestaurantView.css';
 
-
 const RestaurantView: React.FC = () => {
+  const navigate = useNavigate();
   const [menus, setMenus] = useState<MenuProps[]>([]);
-  const [selectedMenu, setSelectedMenu] = useState<MenuProps | null>(null);
   const [newMenu, setNewMenu] = useState<MenuProps | null>(null);
 
   useEffect(() => {
@@ -43,32 +44,8 @@ const RestaurantView: React.FC = () => {
     });
   };
 
-  const handleMenuClick = async (menu_id: number) => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/menus/${menu_id}`);
-      if (!response.ok) throw new Error('Failed to fetch menu details: ' + response.statusText);
-      const menu_data = await response.json();
-      console.log(menu_data);
-      setMenus(menu_data);
-  
-      if (Array.isArray(menu_data.organizedItems)) {
-        const convertedMenu = {
-          ...menu_data,
-          organizedItems: menu_data.organizedItems.map((section: any) => ({
-            ...section,
-            items: section.items.map((item: any) => ({
-              ...item,
-              price: parseFloat(item.price)
-            }))
-          }))
-        };
-        setSelectedMenu(convertedMenu);
-      } else {
-        console.error('menu_data.organizedItems is not an array:', menu_data.organizedItems);
-      }
-    } catch (error: any) {
-      console.error(error.message || 'Failed to fetch menu details');
-    }
+  const handleMenuClick = (menu_id: number) => {
+    navigate(`/restaurant/${menu_id}`);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,12 +61,7 @@ const RestaurantView: React.FC = () => {
 
   return (
     <div>
-      {selectedMenu ? (
-        <div>
-          <Menu {...selectedMenu} />
-          <Button className="Button" onClick={() => setSelectedMenu(null)}>Back to list</Button>
-        </div>
-      ) : newMenu ? (
+      {newMenu ? (
         <RestaurantForm/>
       ) : (
         <div>

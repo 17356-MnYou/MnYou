@@ -28,3 +28,13 @@
   margin: 4px 2px;
   cursor: pointer;
 }
+
+.centered-title {
+  text-align: center;
+}
+
+.save-settings-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
