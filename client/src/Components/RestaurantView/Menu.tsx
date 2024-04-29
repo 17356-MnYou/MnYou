@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
 import CustomerView from '../CustomerView/CustomerView';
+import { useParams } from 'react-router-dom';
 import './Menu.css';
 
 export interface MenuItem {
@@ -49,14 +50,14 @@ const Menu: React.FC<MenuProps> = ({
   organizedItems,
 }) => {
   const [editedMenuItem, setEditedMenuItem] = useState<MenuItem | null>(null);
-  const [color, setColor] = useState<string>(localStorage.getItem('backgroundColor') || backgroundColor);
-  const [font, setFont] = useState<string>(localStorage.getItem('primaryFont') || primaryFont);
-  const [secondaryFontState, setSecondaryFont] = useState<string>(localStorage.getItem('secondaryFont') || secondaryFont);
-  const [primaryFontColorState, setPrimaryFontColor] = useState<string>(localStorage.getItem('primaryFontColor') || primaryFontColor);
-  const [secondaryFontColorState, setSecondaryFontColor] = useState<string>(localStorage.getItem('secondaryFontColor') || secondaryFontColor);
-  const [orientationState, setOrientation] = useState<number>(localStorage.getItem('orientation') ? Number(localStorage.getItem('orientation')) : orientation);
-  const [nameState, setName] = useState<string>(localStorage.getItem('name') || name);
-  const [addressState, setAddress] = useState<string>(localStorage.getItem('address') || address);
+  const [color, setColor] = useState<string>(localStorage.getItem(`backgroundColor-${id}`) || backgroundColor);
+  const [font, setFont] = useState<string>(localStorage.getItem(`primaryFont-${id}`) || primaryFont);
+  const [secondaryFontState, setSecondaryFont] = useState<string>(localStorage.getItem(`secondaryFont-${id}`) || secondaryFont);
+  const [primaryFontColorState, setPrimaryFontColor] = useState<string>(localStorage.getItem(`primaryFontColor-${id}`) || primaryFontColor);
+  const [secondaryFontColorState, setSecondaryFontColor] = useState<string>(localStorage.getItem(`secondaryFontColor-${id}`) || secondaryFontColor);
+  const [orientationState, setOrientation] = useState<number>(localStorage.getItem(`orientation-${id}`) ? Number(localStorage.getItem(`orientation-${id}`)) : orientation);
+  const [nameState, setName] = useState<string>(localStorage.getItem(`name-${id}`) || name);
+  const [addressState, setAddress] = useState<string>(localStorage.getItem(`address-${id}`) || address);
 
   const handleEditClick = (menuItem: MenuItem) => {
     setEditedMenuItem(menuItem);
@@ -86,6 +87,8 @@ const Menu: React.FC<MenuProps> = ({
     setEditedMenuItem(newItem);
   };
 
+  const { menuId } = useParams();
+
   const handleSaveSettings = async () => {
     const response = await fetch(`http://localhost:3000/api/menus/${id}`, {
       method: 'PATCH',
@@ -103,7 +106,7 @@ const Menu: React.FC<MenuProps> = ({
         address: addressState,
       }),
     });
-
+  
     if (response.ok) {
       // Update the state to reflect the new settings
       setFont(font);
@@ -115,14 +118,14 @@ const Menu: React.FC<MenuProps> = ({
       setName(nameState);
       setAddress(addressState);
       
-      localStorage.setItem('backgroundColor', color);
-      localStorage.setItem('primaryFont', font);
-      localStorage.setItem('secondaryFont', secondaryFontState);
-      localStorage.setItem('primaryFontColor', primaryFontColorState);
-      localStorage.setItem('secondaryFontColor', secondaryFontColorState);
-      localStorage.setItem('orientation', orientationState.toString());
-      localStorage.setItem('name', nameState);
-      localStorage.setItem('address', addressState);
+      localStorage.setItem(`backgroundColor-${id}`, color);
+      localStorage.setItem(`primaryFont-${id}`, font);
+      localStorage.setItem(`secondaryFont-${id}`, secondaryFontState);
+      localStorage.setItem(`primaryFontColor-${id}`, primaryFontColorState);
+      localStorage.setItem(`secondaryFontColor-${id}`, secondaryFontColorState);
+      localStorage.setItem(`orientation-${id}`, orientationState.toString());
+      localStorage.setItem(`name-${id}`, nameState);
+      localStorage.setItem(`address-${id}`, addressState);
       alert('Settings saved successfully!');
     } else {
       console.error('Failed to save settings:', await response.text());
@@ -138,8 +141,7 @@ const Menu: React.FC<MenuProps> = ({
         <div>
           <h2 className="centered-title">Customer View</h2>
           <div className="customer-view-container" style={{ backgroundColor: color, fontFamily: font }}>
-            <CustomerView />
-            <Button className="floating-button Button">Edit</Button>
+            <CustomerView menuId={menuId ? Number(menuId) : undefined} />;
           </div>
         </div>
 

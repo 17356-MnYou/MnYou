@@ -5,6 +5,7 @@ import CustomerView from './Components/CustomerView/CustomerView';
 import RestaurantView from './Components/RestaurantView/RestaurantView';
 import MenuDetails from './Components/RestaurantView/MenuDetails';
 import Landing from './Components/Landing';
+import { useParams } from 'react-router-dom';
 import MenuItemDetails from './Components/CustomerView/MenuItemDetails';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
@@ -18,9 +19,9 @@ function App() {
     secondaryFontColor: '',
     backgroundColor: ''
   });
-
+  const { menuId } = useParams();
   useEffect(() => {
-    fetch('http://localhost:3000/api/menus/1')
+    fetch(`http://localhost:3000/api/menus/${menuId}`)
          .then((response) => response.json())
          .then((data) => {
             setStoreStyle({
@@ -34,7 +35,7 @@ function App() {
          .catch((err) => {
             console.log(err.message);
          });
-  }, []);
+  }, [menuId]);
   
   return (
     <div className="App">
@@ -45,7 +46,7 @@ function App() {
           <Route path="customer/:menuId" element={<CustomerView />} />
           <Route path="/menuItem/:menuItemId" element={<MenuItemDetails style={storeStyle}/>} />
           <Route path="restaurant" element={<RestaurantView />} />
-          <Route path="restaurant/:menu_id" element={<MenuDetails />} />
+          <Route path="restaurant/:menuId" element={<MenuDetails />} />
         </Routes>
       </BrowserRouter>
       <Footer />

@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import Menu, { MenuProps } from './Menu';
 
 const MenuDetails: React.FC = () => {
-  const { menu_id } = useParams<{ menu_id: string }>();
+  const { menuId } = useParams<{ menuId: string }>();
   const [menu, setMenu] = useState<MenuProps | null>(null);
 
   useEffect(() => {
     const fetchMenuDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/menus/${menu_id}`);
+        const response = await fetch(`http://localhost:3000/api/menus/${menuId}`);
         if (!response.ok) throw new Error('Failed to fetch menu details: ' + response.statusText);
         const menu_data = await response.json();
         console.log(menu_data);
@@ -34,7 +34,7 @@ const MenuDetails: React.FC = () => {
       }
     };
     fetchMenuDetails();
-  }, [menu_id]);
+  }, [menuId]);
 
   return menu ? <Menu {...menu} /> : <div>Loading...</div>;
 };

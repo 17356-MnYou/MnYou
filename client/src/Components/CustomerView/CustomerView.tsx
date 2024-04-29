@@ -5,8 +5,15 @@ import { useEffect, useState } from 'react';
 import { Dialog, DialogTitle } from '@mui/material';
 import FilterButton from './FilterButton';
 
+interface CustomerViewProps {
+  menuId?: number;
+}
 
-function CustomerView() {
+function CustomerView({ menuId: propMenuId }: CustomerViewProps) {
+  const { menuId: routeMenuIdString } = useParams() as { menuId: string };
+  console.log(routeMenuIdString);
+  const routeMenuId = Number(routeMenuIdString);
+  const menuId = propMenuId ?? routeMenuId;
 
   interface DietaryOptions {
     'vegan'?: string[];
@@ -57,8 +64,6 @@ function CustomerView() {
   function handleOpen() { 
     setOpen(true);
   }
-
-  const { menuId } = useParams();
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/menus/${menuId}`)

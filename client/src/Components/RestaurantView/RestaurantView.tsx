@@ -44,8 +44,8 @@ const RestaurantView: React.FC = () => {
     });
   };
 
-  const handleMenuClick = (menu_id: number) => {
-    navigate(`/restaurant/${menu_id}`);
+  const handleMenuClick = (menuId: number) => {
+    navigate(`/restaurant/${menuId}`);
   };
 
   return (
