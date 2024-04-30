@@ -135,13 +135,12 @@ const Menu: React.FC<MenuProps> = ({
   };
 
   return (
-    <div className="Menu">
+    <div className="container">
       <h2>{name}</h2>
       <p>{address}</p>
-
-      <div className="settings-and-view-container">
-        <div>
-          <h2 className="centered-title">Customer View</h2>
+      <div className="Menu">
+        <div className="View">
+          <h2 className="customerView">Customer View</h2>
           <div className="customer-view-container">
             <CustomerView 
               menuId={menuId ? Number(menuId) : undefined} 
@@ -156,55 +155,55 @@ const Menu: React.FC<MenuProps> = ({
             />
           </div>
         </div>
-
-        <div className="settings">
-          <h2>Settings</h2>
-          <label>
-            Primary Font:
-            <select value={font} onChange={(e) => setFont(e.target.value)}>
-              <option value="Arial">Arial</option>
-              <option value="Verdana">Verdana</option>
-              <option value="Courier New">Courier New</option>
-            </select>
-          </label>
-          <label>
-            Secondary Font:
-            <select value={secondaryFontState} onChange={(e) => setSecondaryFont(e.target.value)}>
-              <option value="Arial">Arial</option>
-              <option value="Verdana">Verdana</option>
-              <option value="Courier New">Courier New</option>
-            </select>
-          </label>
-          <label>
-            Primary Font Color:
-            <input type="color" value={primaryFontColorState} onChange={(e) => setPrimaryFontColor(e.target.value)} />
-          </label>
-          <label>
-            Secondary Font Color:
-            <input type="color" value={secondaryFontColorState} onChange={(e) => setSecondaryFontColor(e.target.value)} />
-          </label>
-          <label>
-            Background Color:
-            <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
-          </label>
-          <label>
-            Orientation:
-            <input type="number" value={orientationState} onChange={(e) => setOrientation(Number(e.target.value))} />
-          </label>
-          <label>
-            Name:
-            <input type="text" value={nameState} onChange={(e) => setName(e.target.value)} />
-          </label>
-          <label>
-            Address:
-            <input type="text" value={addressState} onChange={(e) => setAddress(e.target.value)} />
-          </label>
-          <div className="save-settings-button-container">
-            <Button className="Button" onClick={handleSaveSettings}>Save Settings</Button>
+        <div className="settings-and-view-container">
+          <div className="settings">
+            <h2>Settings</h2>
+            <label>
+              Name:
+              <input type="text" value={nameState} onChange={(e) => setName(e.target.value)} />
+            </label>
+            <label>
+              Address:
+              <input type="text" value={addressState} onChange={(e) => setAddress(e.target.value)} />
+            </label>
+            <label>
+              Primary Font:
+              <select value={font} onChange={(e) => setFont(e.target.value)}>
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Courier New">Courier New</option>
+              </select>
+            </label>
+            <label>
+              Secondary Font:
+              <select value={secondaryFontState} onChange={(e) => setSecondaryFont(e.target.value)}>
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Courier New">Courier New</option>
+              </select>
+            </label>
+            <label>
+              Primary Font Color:
+              <input type="color" value={primaryFontColorState} onChange={(e) => setPrimaryFontColor(e.target.value)} />
+            </label>
+            <label>
+              Secondary Font Color:
+              <input type="color" value={secondaryFontColorState} onChange={(e) => setSecondaryFontColor(e.target.value)} />
+            </label>
+            <label>
+              Background Color:
+              <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+            </label>
+            <label>
+              Orientation:
+              <input type="number" value={orientationState} onChange={(e) => setOrientation(Number(e.target.value))} />
+            </label>
+            <div className="save-settings-button-container">
+              <Button className="Button" onClick={handleSaveSettings}>Save Settings</Button>
+            </div>
           </div>
         </div>
       </div>
-      
       {editedMenuItem ? (
         <Form onSubmit={handleFormSubmit}>
           <Form.Group>
