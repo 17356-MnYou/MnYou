@@ -164,16 +164,15 @@ var RestaurantView = function () {
                         throw new Error('Failed to delete menu: ' + response.statusText);
                     // Update state to remove the menu from the list
                     setMenus(menus.filter(function (menu) { return menu.id !== menu_id; }));
-                    alert("Menu deleted successfully."); // Optional: Notify user of success
+                    alert("Menu deleted successfully.");
                     return [3 /*break*/, 4];
                 case 3:
                     error_3 = _a.sent();
                     console.error(error_3.message || 'Failed to delete menu');
-                    alert("Failed to delete menu."); // Optional: Notify user of failure
+                    alert("Failed to delete menu.");
                     return [3 /*break*/, 4];
                 case 4: return [3 /*break*/, 6];
                 case 5:
-                    // Optional: Handle the case where the user cancels the deletion
                     console.log("Deletion cancelled by user.");
                     _a.label = 6;
                 case 6: return [2 /*return*/];

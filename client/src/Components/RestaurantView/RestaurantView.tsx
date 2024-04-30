@@ -84,7 +84,6 @@ const RestaurantView: React.FC = () => {
   };
 
   const handleDelete = (menu_id: number) => async () => {
-    // Ask for confirmation before deletion
     const confirmDelete = window.confirm("Are you sure you want to delete this menu?");
     if (confirmDelete) {
       try {
@@ -94,13 +93,12 @@ const RestaurantView: React.FC = () => {
         if (!response.ok) throw new Error('Failed to delete menu: ' + response.statusText);
         // Update state to remove the menu from the list
         setMenus(menus.filter(menu => menu.id !== menu_id));
-        alert("Menu deleted successfully."); // Optional: Notify user of success
+        alert("Menu deleted successfully.");
       } catch (error: any) {
         console.error(error.message || 'Failed to delete menu');
-        alert("Failed to delete menu."); // Optional: Notify user of failure
+        alert("Failed to delete menu.");
       }
     } else {
-      // Optional: Handle the case where the user cancels the deletion
       console.log("Deletion cancelled by user.");
     }
   };
