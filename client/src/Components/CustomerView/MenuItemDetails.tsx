@@ -3,6 +3,7 @@ import './CustomerView.css';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+
 interface iDetails { 
   title: string; 
   secondaryTitle: string; 
@@ -50,7 +51,7 @@ function MenuItemDetails(props: iStyle) {
     <div style={{textAlign: 'left', fontFamily: props.style.primaryFont, backgroundColor: props.style.backgroundColor, color: props.style.primaryFontColor}}>
       <h1>{details.title}</h1>
       <p>{details.secondaryTitle}</p>
-      <img src={details.image}></img>
+      <img src={`/${details.image}`}></img>
       <p>${details.price}</p>
       <p style={{color: props.style.secondaryFontColor}}><i>{details.description}</i></p>
     </div>

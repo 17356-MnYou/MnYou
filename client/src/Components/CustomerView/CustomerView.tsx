@@ -73,6 +73,7 @@ function CustomerView() {
               backgroundColor: data.backgroundColor
             });
             setFilteredMenuItems(data.organizedItems);
+            console.log("data: ", data);
          })
          .catch((err) => {
             console.log(err.message);
