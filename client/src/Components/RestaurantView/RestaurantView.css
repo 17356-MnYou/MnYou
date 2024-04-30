@@ -61,7 +61,6 @@
 .customer-view-container {
   position: relative;
   border: 5px solid #029FA4;
-  padding: 10px;
   width: 375px;
   height: 667px;
   margin: 10px;
@@ -72,8 +71,10 @@
 
 .settings-and-view-container {
   margin-top: 70px;
+  margin: 10px;
   display: flex;
   justify-content: space-between;
+  overflow-y: auto;
 }
 
 .customer-view-container {

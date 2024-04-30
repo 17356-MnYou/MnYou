@@ -118,7 +118,7 @@ router.patch("/:id", async (req: Request, res: Response) => {
     const menuData = req.body;
   
     const updatedFields: { [key: string]: any } = {};
-    const validFields = ['primary_font', 'secondary_font', 'primary_font_color', 'secondary_font_color', 'background_color', 'orientation', 'name', 'address'];
+    const validFields = ['primaryFont', 'secondaryFont', 'primaryFontColor', 'secondaryFontColor', 'backgroundColor', 'orientation', 'name', 'address'];
     for (let field of validFields) {
       if (field in menuData) {
         updatedFields[field] = menuData[field];

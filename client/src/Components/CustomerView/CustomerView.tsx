@@ -7,9 +7,27 @@ import FilterButton from './FilterButton';
 
 interface CustomerViewProps {
   menuId?: number;
+  backgroundColor?: string;
+  primaryFont?: string;
+  secondaryFont?: string;
+  primaryFontColor?: string;
+  secondaryFontColor?: string;
+  orientation?: number;
+  name?: string;
+  address?: string;
 }
 
-function CustomerView({ menuId: propMenuId }: CustomerViewProps) {
+function CustomerView({ 
+  menuId: propMenuId, 
+  backgroundColor, 
+  primaryFont, 
+  secondaryFont, 
+  primaryFontColor, 
+  secondaryFontColor, 
+  orientation, 
+  name, 
+  address 
+}: CustomerViewProps) {
   const { menuId: routeMenuIdString } = useParams() as { menuId: string };
   console.log(routeMenuIdString);
   const routeMenuId = Number(routeMenuIdString);
@@ -70,21 +88,21 @@ function CustomerView({ menuId: propMenuId }: CustomerViewProps) {
          .then((response) => response.json())
          .then((data) => {
             setMenuData(data.organizedItems);
-            setStoreName(data.name); 
-            setStoreAddress(data.address);
+            setStoreName(name || data.name); 
+            setStoreAddress(address || data.address);
             setStoreStyle({
-              primaryFont: data.primaryFont,
-              secondaryFont: data.secondaryFont,
-              primaryFontColor: data.primaryFontColor,
-              secondaryFontColor: data.secondaryFontColor,
-              backgroundColor: data.backgroundColor
+              primaryFont: primaryFont || data.primaryFont,
+              secondaryFont: secondaryFont || data.secondaryFont,
+              primaryFontColor: primaryFontColor || data.primaryFontColor,
+              secondaryFontColor: secondaryFontColor || data.secondaryFontColor,
+              backgroundColor: backgroundColor || data.backgroundColor
             });
             setFilteredMenuItems(data.organizedItems);
          })
          .catch((err) => {
             console.log(err.message);
          });
-  }, [menuId]);
+  }, [menuId, backgroundColor, primaryFont, secondaryFont, primaryFontColor, secondaryFontColor, orientation, name, address]);
 
   const [search, setSearch] = useState('');
 
@@ -97,7 +115,7 @@ function CustomerView({ menuId: propMenuId }: CustomerViewProps) {
   }, [search, menuData]);  
 
   return (
-    <div>
+    <div style={{ backgroundColor }}>
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Select filters</DialogTitle>
       <p style={{marginLeft: 0}}>Dietary restrictions:</p>

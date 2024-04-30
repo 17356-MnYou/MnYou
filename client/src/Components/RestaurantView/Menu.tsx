@@ -108,6 +108,15 @@ const Menu: React.FC<MenuProps> = ({
     });
   
     if (response.ok) {
+      localStorage.setItem(`backgroundColor-${id}`, color);
+      localStorage.setItem(`primaryFont-${id}`, font);
+      localStorage.setItem(`secondaryFont-${id}`, secondaryFontState);
+      localStorage.setItem(`primaryFontColor-${id}`, primaryFontColorState);
+      localStorage.setItem(`secondaryFontColor-${id}`, secondaryFontColorState);
+      localStorage.setItem(`orientation-${id}`, orientationState.toString());
+      localStorage.setItem(`name-${id}`, nameState);
+      localStorage.setItem(`address-${id}`, addressState);
+  
       // Update the state to reflect the new settings
       setFont(font);
       setSecondaryFont(secondaryFontState);
@@ -117,15 +126,8 @@ const Menu: React.FC<MenuProps> = ({
       setOrientation(orientationState);
       setName(nameState);
       setAddress(addressState);
-      
-      localStorage.setItem(`backgroundColor-${id}`, color);
-      localStorage.setItem(`primaryFont-${id}`, font);
-      localStorage.setItem(`secondaryFont-${id}`, secondaryFontState);
-      localStorage.setItem(`primaryFontColor-${id}`, primaryFontColorState);
-      localStorage.setItem(`secondaryFontColor-${id}`, secondaryFontColorState);
-      localStorage.setItem(`orientation-${id}`, orientationState.toString());
-      localStorage.setItem(`name-${id}`, nameState);
-      localStorage.setItem(`address-${id}`, addressState);
+
+
       alert('Settings saved successfully!');
     } else {
       console.error('Failed to save settings:', await response.text());
@@ -140,8 +142,18 @@ const Menu: React.FC<MenuProps> = ({
       <div className="settings-and-view-container">
         <div>
           <h2 className="centered-title">Customer View</h2>
-          <div className="customer-view-container" style={{ backgroundColor: color, fontFamily: font }}>
-            <CustomerView menuId={menuId ? Number(menuId) : undefined} />;
+          <div className="customer-view-container">
+            <CustomerView 
+              menuId={menuId ? Number(menuId) : undefined} 
+              primaryFont={font}
+              secondaryFont={secondaryFontState}
+              primaryFontColor={primaryFontColorState}
+              secondaryFontColor={secondaryFontColorState}
+              backgroundColor={color}
+              orientation={orientationState}
+              name={nameState}
+              address={addressState}
+            />
           </div>
         </div>
 

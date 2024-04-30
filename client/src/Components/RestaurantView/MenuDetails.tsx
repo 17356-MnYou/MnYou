@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Menu, { MenuProps } from './Menu';
+import Navbar from '../Navbar';
 
 const MenuDetails: React.FC = () => {
   const { menuId } = useParams<{ menuId: string }>();
@@ -36,7 +37,12 @@ const MenuDetails: React.FC = () => {
     fetchMenuDetails();
   }, [menuId]);
 
-  return menu ? <Menu {...menu} /> : <div>Loading...</div>;
+  return (
+    <>
+      <Navbar />
+      {menu ? <Menu {...menu} /> : <div>Loading...</div>}
+    </>
+  );
 };
 
 export default MenuDetails;
