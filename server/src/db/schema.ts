@@ -1,9 +1,15 @@
 import { relations } from "drizzle-orm";
-import { text } from "drizzle-orm/pg-core";
+import { customType, text } from "drizzle-orm/pg-core";
 import { boolean } from "drizzle-orm/pg-core";
 import { real } from "drizzle-orm/pg-core";
 import { integer } from "drizzle-orm/pg-core";
 import { varchar, pgTable, serial } from "drizzle-orm/pg-core";
+
+const bytea = customType<{ data: Buffer; notNull: false; default: false }>({
+  dataType() {
+    return "bytea";
+  },
+});
 
 export const restaurants = pgTable("restaurants", {
   id: serial("id").primaryKey(),
@@ -42,12 +48,16 @@ export const menuItems = pgTable("menu_items", {
   id: serial("id").primaryKey(),
   title: text("title"),
   secondaryTitle: text("secondary_title"),
-  image: text("image"),
+  image: bytea("image"),
   price: real("price"),
   description: text("description"),
   isActive: boolean("is_active").notNull(),
-  menu: integer("menu").references(() => menus.id).notNull(),
-  section: integer("section").references(() => sections.id).notNull(),
+  menu: integer("menu")
+    .references(() => menus.id)
+    .notNull(),
+  section: integer("section")
+    .references(() => sections.id)
+    .notNull(),
 });
 
 export const menuItemRelations = relations(menuItems, ({ one, many }) => ({
@@ -79,7 +89,7 @@ export const sectionRelations = relations(sections, ({ one, many }) => ({
 export const ingredients = pgTable("ingredients", {
   id: serial("id").primaryKey(),
   name: text("name"),
-  image: text("image"),
+  image: bytea("image"),
 });
 
 export const ingredientRelations = relations(ingredients, ({ many }) => ({
