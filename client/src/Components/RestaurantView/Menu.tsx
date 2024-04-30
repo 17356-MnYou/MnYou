@@ -241,7 +241,7 @@ const Menu: React.FC<MenuProps> = ({
               section.items.map((menuItem) => (
                 <tr key={menuItem.id}>
                   <td>{menuItem.title}</td>
-                  <td><img src={menuItem.image} alt={menuItem.title} style={{ width: '100px' }} /></td>
+                  <td><img src={`/${menuItem.image}`} alt={menuItem.title} style={{ width: '100px' }} /></td>
                   <td>${menuItem.price.toFixed(2)}</td>
                   <td><Button onClick={() => handleEditClick(menuItem)}>Edit</Button></td>
                 </tr>
