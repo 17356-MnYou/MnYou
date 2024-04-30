@@ -11,9 +11,10 @@
 }
 
 .detailImg { 
-    height: 40vh;
+    height: 90vw;
     border-radius: 10px;
-    max-width: 90vw;
+    width: 90vw;
+    object-fit: cover;
 }
 
 .detailText { 
