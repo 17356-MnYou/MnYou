@@ -72,3 +72,7 @@
   top: 30px;
   right: 30px;
 }
+
+.clickable-image {
+    cursor: pointer;
+}

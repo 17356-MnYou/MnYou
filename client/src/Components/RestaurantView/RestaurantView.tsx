@@ -83,6 +83,28 @@ const RestaurantView: React.FC = () => {
     setNewMenu(null);
   };
 
+  const handleDelete = (menu_id: number) => async () => {
+    // Ask for confirmation before deletion
+    const confirmDelete = window.confirm("Are you sure you want to delete this menu?");
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://localhost:3000/api/restaurants/${menu_id}`, {
+          method: 'DELETE',
+        });
+        if (!response.ok) throw new Error('Failed to delete menu: ' + response.statusText);
+        // Update state to remove the menu from the list
+        setMenus(menus.filter(menu => menu.id !== menu_id));
+        alert("Menu deleted successfully."); // Optional: Notify user of success
+      } catch (error: any) {
+        console.error(error.message || 'Failed to delete menu');
+        alert("Failed to delete menu."); // Optional: Notify user of failure
+      }
+    } else {
+      // Optional: Handle the case where the user cancels the deletion
+      console.log("Deletion cancelled by user.");
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -106,6 +128,7 @@ const RestaurantView: React.FC = () => {
                 <th>Password</th>
                 <th>QR Code</th>
                 <th>View Menu</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -129,6 +152,16 @@ const RestaurantView: React.FC = () => {
                     <Button className="view-menu-button" onClick={() => handleMenuClick(menu.id)}>
                       View Menu
                     </Button>
+                  </td>
+                  <td>
+                    <img
+                      src="/trash.png"
+                      width="60"
+                      height="60"
+                      alt="MnYou logo"
+                      className="clickable-image"
+                      onClick={handleDelete(menu.id)}
+                    />
                   </td>
                 </tr>
               ))}

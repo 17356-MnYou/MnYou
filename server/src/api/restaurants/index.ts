@@ -8,19 +8,24 @@ const router = express.Router();
 router.post("/", async (req: Request, res: Response) => {
   const restaurantData = req.body;
   if (!restaurantData || !restaurantData.username || !restaurantData.password) {
-    return res.status(500).send("Invalid restaurant data");
+    // Send a clear error message back to the client
+    return res.status(400).json({ message: "Invalid restaurant data, username and password are required." });
   }
 
   try {
     await db.insert(restaurants).values({
+      name: restaurantData.name,
+      address: restaurantData.address,
+      phoneNumber: restaurantData.phoneNumber,
       username: restaurantData.username,
       password: restaurantData.password,
     });
-  } catch (error) {
-    return res.status(500).send(error);
+    // Properly end the request after successful insertion
+    return res.status(201).json({ message: "Restaurant data saved successfully." });
+  } catch (error: any) {
+    // Send the error as a JSON response
+    return res.status(500).json({ message: "Failed to save restaurant data", error: error.message });
   }
-
-  return res.status(200);
 });
 
 // READ
@@ -76,14 +81,14 @@ router.put("/", async (req: Request, res: Response) => {
 });
 
 // DELETE
-router.delete("/:username", async (req: Request, res: Response) => {
-  const restaurantUsername = req.params.username;
-  if (!restaurantUsername) {
+router.delete("/:id", async (req: Request, res: Response) => {
+  const restaurantId = Number(req.params.id);
+  if (!restaurantId) {
     return res.status(500).send("Invalid username");
   }
   const [deletedRestaurant] = await db
     .delete(restaurants)
-    .where(eq(restaurants.username, restaurantUsername))
+    .where(eq(restaurants.id, restaurantId))
     .returning();
 
   return res.status(200).json(deletedRestaurant);
