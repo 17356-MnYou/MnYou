@@ -44,7 +44,7 @@ function CustomerView() {
   const filterDetails: FilterDetails = {
     vegan: ['meat', 'chicken', 'beef', 'fish', 'cheese', 'rice'],
     vegetarian: ['meat', 'chicken', 'beef', 'fish'],
-    pescetarian: ['meat', 'chicken', 'beef'],
+    pescetarian: ['fish', 'shrimp', 'crab'],
     dairyFree: ['cheese', 'milk', 'yogurt']
   };
   const ingredientPreferences = ['no olives', 'no broccoli', 'no eggs', 'no cabbage', 'no peppers']
@@ -88,6 +88,33 @@ function CustomerView() {
     })).filter(section => section.items.length > 0);
     setFilteredMenuItems(filtered);
   }, [search, menuData]);  
+
+  //needs to be updated once we have proper ingredients for each item
+  useEffect(() => {
+    let filterList: string[] = [];
+  
+    //collect ingredients to exclude based on active filters
+    filters.forEach((filter) => {
+      if (filterDetails[filter]) {
+        filterList.push(...filterDetails[filter].map(ingredient => ingredient.toLowerCase()));
+      } else {
+      }
+    });
+       
+    //replace testIngredients with actual list of ingredients
+    let testIngredients = ['chicken'];
+    //apply the filtering logic across the menu items
+    const filtered = menuData.map(section => ({
+      ...section,
+      items: section.items.filter((item: { ingredients: any[]; }) => {
+        // Log each item's ingredients to verify
+        return !testIngredients.some(element => filterList.includes(element));
+      })
+    })).filter(section => section.items.length > 0);
+  
+    setFilteredMenuItems(filtered);
+  }, [filters, menuData]);
+  
 
   return (
     <div>
