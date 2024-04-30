@@ -3,17 +3,8 @@
   margin: auto;
 }
 
-.Menu h2, .Menu h3, .Menu h4 {
-  color: #3DB5B9;
-}
-
 .Menu p {
   color: #333;
-}
-
-.Menu img {
-  width: 100px;
-  height: 100px;
 }
 
 .Menu .Button {
@@ -27,4 +18,14 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+.centered-title {
+  text-align: center;
+}
+
+.save-settings-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }

@@ -1,12 +1,37 @@
 import Section from './Section';
 import './CustomerView.css';
-
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Dialog, DialogTitle } from '@mui/material';
 import FilterButton from './FilterButton';
 
+interface CustomerViewProps {
+  menuId?: number;
+  backgroundColor?: string;
+  primaryFont?: string;
+  secondaryFont?: string;
+  primaryFontColor?: string;
+  secondaryFontColor?: string;
+  orientation?: number;
+  name?: string;
+  address?: string;
+}
 
-function CustomerView() {
+function CustomerView({ 
+  menuId: propMenuId, 
+  backgroundColor, 
+  primaryFont, 
+  secondaryFont, 
+  primaryFontColor, 
+  secondaryFontColor, 
+  orientation, 
+  name, 
+  address 
+}: CustomerViewProps) {
+  const { menuId: routeMenuIdString } = useParams() as { menuId: string };
+  console.log(routeMenuIdString);
+  const routeMenuId = Number(routeMenuIdString);
+  const menuId = propMenuId ?? routeMenuId;
 
   interface DietaryOptions {
     'vegan'?: string[];
@@ -59,25 +84,25 @@ function CustomerView() {
   }
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/menus/1')
+    fetch(`http://localhost:3000/api/menus/${menuId}`)
          .then((response) => response.json())
          .then((data) => {
             setMenuData(data.organizedItems);
-            setStoreName(data.name); 
-            setStoreAddress(data.address);
+            setStoreName(name || data.name); 
+            setStoreAddress(address || data.address);
             setStoreStyle({
-              primaryFont: data.primaryFont,
-              secondaryFont: data.secondaryFont,
-              primaryFontColor: data.primaryFontColor,
-              secondaryFontColor: data.secondaryFontColor,
-              backgroundColor: data.backgroundColor
+              primaryFont: primaryFont || data.primaryFont,
+              secondaryFont: secondaryFont || data.secondaryFont,
+              primaryFontColor: primaryFontColor || data.primaryFontColor,
+              secondaryFontColor: secondaryFontColor || data.secondaryFontColor,
+              backgroundColor: backgroundColor || data.backgroundColor
             });
             setFilteredMenuItems(data.organizedItems);
          })
          .catch((err) => {
             console.log(err.message);
          });
-  }, []);
+  }, [menuId, backgroundColor, primaryFont, secondaryFont, primaryFontColor, secondaryFontColor, orientation, name, address]);
 
   const [search, setSearch] = useState('');
 
@@ -90,7 +115,7 @@ function CustomerView() {
   }, [search, menuData]);  
 
   return (
-    <div>
+    <div style={{ backgroundColor }}>
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Select filters</DialogTitle>
       <p style={{marginLeft: 0}}>Dietary restrictions:</p>
