@@ -43,7 +43,7 @@ var drizzle_orm_1 = require("drizzle-orm");
 var router = express_1["default"].Router();
 // CREATE
 router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var restaurantData, error_1;
+    var restaurantData, error_1, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -55,6 +55,25 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.db.insert(schema_1.menus).values({
+                        id: restaurantData.id,
+                        name: restaurantData.name,
+                        address: restaurantData.address,
+                        primaryFont: "Arial",
+                        secondaryFont: "Arial",
+                        primaryFontColor: "#cd1313",
+                        secondaryFontColor: "#cd1313",
+                        backgroundColor: "#efb291",
+                        orientation: 1
+                    })];
+            case 2:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _a.sent();
+                return [2 /*return*/, res.status(500).json({ message: "Failed to save menu data", error: error_1.message })];
+            case 4:
+                _a.trys.push([4, 6, , 7]);
                 return [4 /*yield*/, db_1.db.insert(schema_1.restaurants).values({
                         name: restaurantData.name,
                         address: restaurantData.address,
@@ -62,15 +81,15 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                         username: restaurantData.username,
                         password: restaurantData.password
                     })];
-            case 2:
+            case 5:
                 _a.sent();
                 // Properly end the request after successful insertion
                 return [2 /*return*/, res.status(201).json({ message: "Restaurant data saved successfully." })];
-            case 3:
-                error_1 = _a.sent();
+            case 6:
+                error_2 = _a.sent();
                 // Send the error as a JSON response
-                return [2 /*return*/, res.status(500).json({ message: "Failed to save restaurant data", error: error_1.message })];
-            case 4: return [2 /*return*/];
+                return [2 /*return*/, res.status(500).json({ message: "Failed to save restaurant data", error: error_2.message })];
+            case 7: return [2 /*return*/];
         }
     });
 }); });
@@ -110,7 +129,7 @@ router.get("/:username", function (req, res) { return __awaiter(void 0, void 0, 
 }); });
 // UPDATE
 router.put("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var restaurantData, updatedData, error_2;
+    var restaurantData, updatedData, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -136,8 +155,8 @@ router.put("/", function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 _a.sent();
                 return [3 /*break*/, 4];
             case 3:
-                error_2 = _a.sent();
-                return [2 /*return*/, res.status(500).send(error_2)];
+                error_3 = _a.sent();
+                return [2 /*return*/, res.status(500).send(error_3)];
             case 4: return [2 /*return*/, res.status(200)];
         }
     });

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { db } from "../../db";
-import { restaurants } from "../../db/schema";
+import { restaurants, menus } from "../../db/schema";
 import { eq } from "drizzle-orm";
 
 const router = express.Router();
@@ -10,6 +10,22 @@ router.post("/", async (req: Request, res: Response) => {
   if (!restaurantData || !restaurantData.username || !restaurantData.password) {
     // Send a clear error message back to the client
     return res.status(400).json({ message: "Invalid restaurant data, username and password are required." });
+  }
+
+  try {
+    await db.insert(menus).values({
+      id: restaurantData.id,
+      name: restaurantData.name,
+      address: restaurantData.address,
+      primaryFont: "Arial",
+      secondaryFont: "Arial",
+      primaryFontColor: "#cd1313",
+      secondaryFontColor: "#cd1313",
+      backgroundColor: "#efb291",
+      orientation: 1,
+    });
+  } catch (error: any) {
+    return res.status(500).json({ message: "Failed to save menu data", error: error.message });
   }
 
   try {
