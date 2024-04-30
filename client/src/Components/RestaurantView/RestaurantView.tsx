@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import Navbar from '../Navbar';
 import Menu, { MenuProps } from './Menu';
 import RestaurantForm from './MenuForm';
 import QRCode from "react-qr-code";
@@ -84,6 +85,7 @@ const RestaurantView: React.FC = () => {
 
   return (
     <div>
+      <Navbar />
       {selectedMenu ? (
         <div>
           <Menu {...selectedMenu} />
