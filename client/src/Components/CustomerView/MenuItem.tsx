@@ -24,7 +24,7 @@ function MenuItem(props: iMenuItem) {
 
   return (
     <div className="menuItemBox" onClick={navigateToItemDescription}>
-    <div className="menuItemImage"><img className="foodImage" src={''}></img></div>
+    <div className="menuItemImage"><img className="foodImage" src={`/${props.image}`}></img></div>
     <div className="menuItemDescription">
       {props.title.length > 14 ? <p><b>{props.title.substring(0,14)}...</b></p> : <p><b>{props.title}</b></p>}
       <p>${props.price}</p>
