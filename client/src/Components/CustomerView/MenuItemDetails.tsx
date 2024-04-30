@@ -54,7 +54,8 @@ function MenuItemDetails(props: iStyle) {
   }, []);
 
   function navigateToMainMenu(){ 
-    navigate(`/customer`);
+    //should be whichever menu item we need but can come back to later
+    navigate(`/customer/1`);
   }
 
   return (    
