@@ -2,6 +2,8 @@ import Section from './Section';
 import './CustomerView.css';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import './MenuItemDetails.css'
+import { useNavigate } from "react-router-dom";
 
 
 interface iDetails { 
@@ -19,6 +21,10 @@ interface iStyle {
 }
 
 function MenuItemDetails(props: iStyle) {
+
+  const navigate = useNavigate();
+
+  const sampleIngredientList = ['🍅 tomato', '🧀 cheese', '🌿 basil']
   let { menuItemId } = useParams();
 
   const [details, setDetails] = useState<iDetails>({
@@ -47,13 +53,27 @@ function MenuItemDetails(props: iStyle) {
          });
   }, []);
 
-  return (
-    <div style={{textAlign: 'left', fontFamily: props.style.primaryFont, backgroundColor: props.style.backgroundColor, color: props.style.primaryFontColor}}>
+  function navigateToMainMenu(){ 
+    navigate(`/customer`);
+  }
+
+  return (    
+    <div className="menuItemDetailsBox" style={{textAlign: 'left', fontFamily: props.style.primaryFont, backgroundColor: props.style.backgroundColor, color: props.style.primaryFontColor}}>
+    <button onClick={navigateToMainMenu}>Back to menu</button>
       <h1>{details.title}</h1>
       <p>{details.secondaryTitle}</p>
-      <img src={`/${details.image}`}></img>
+      <img className="detailImg" src={`/${details.image}`}></img>
       <p>${details.price}</p>
-      <p style={{color: props.style.secondaryFontColor}}><i>{details.description}</i></p>
+      <p className="detailText" style={{color: props.style.secondaryFontColor}}><i>{details.description}</i></p>
+      {/* add once we have ingredient list  */}
+      <h3>Ingredients:</h3>
+      <div className="ingredientContainer">
+      {sampleIngredientList.map(ingredient => (
+          <span className='ingredientPill' style={{backgroundColor: props.style.primaryFontColor}} key={ingredient} >
+            {ingredient}
+          </span>
+      ))}
+      </div>
     </div>
   );
 }

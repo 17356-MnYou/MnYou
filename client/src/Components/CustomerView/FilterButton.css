@@ -7,9 +7,14 @@ button {
     width: fit-content;
     height: fit-content;
     cursor: pointer;
+    border: 1px;
 }
 
 .buttonFilled { 
     background-color: #029FA4;
     color: white;
+}
+
+button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /* Shadow appears on hover */
 }
