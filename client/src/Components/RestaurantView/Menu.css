@@ -1,27 +1,41 @@
 .Menu {
-  width: 80%;
+  display: flex;
+  width: 40%;
   margin: auto;
 }
 
-.Menu p {
-  color: #333;
+.settings, .View, .Table {
+  flex: 1;
+  padding: 2em;
 }
 
-.Menu .Button {
-  background-color: #029FA4;
-  border: none;
-  color: white;
-  padding: 15px 32px;
+.customerView{
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
 }
 
-.centered-title {
-  text-align: center;
+.settings {
+  order: 1;
+}
+
+.customer-view-container {
+  padding: 0;
+  margin: 0;
+}
+
+.Button {
+  margin: auto;
+  margin-bottom: 10%;
+}
+
+.save-settings-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.settings label {
+  display: block; /* Makes each label block-level, forcing a new line */
+  margin-bottom: 10px; /* Adds space between each form control */
 }
 
 .save-settings-button-container {

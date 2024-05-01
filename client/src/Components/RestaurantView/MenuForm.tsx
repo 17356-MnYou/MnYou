@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
 import { Form, Button } from 'react-bootstrap';
 import { MenuProps } from './Menu';
 import './RestaurantView.css';
@@ -11,6 +12,8 @@ const RestaurantForm = () => {
     username: '',
     password: ''
   });
+
+  const navigate = useNavigate(); // Use the useNavigate hook for navigation
 
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
@@ -32,8 +35,9 @@ const RestaurantForm = () => {
       });
       console.log('Restaurant data:', newMenu);
       if (response.ok) {
-        console.log('Restaurant data saved successfully');
+        alert('Restaurant data saved successfully'); // Show an alert or another form of feedback
         setNewMenu({ name: '', address: '', phoneNumber: '', username: '', password: '' }); // Reset form
+        navigate('/restaurant');
       } else {
         console.error('Failed to save restaurant data');
       }
