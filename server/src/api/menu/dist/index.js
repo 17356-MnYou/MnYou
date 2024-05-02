@@ -215,7 +215,7 @@ function getIngredientsByMenuItem(menuItemId) {
 // Can only receive the data from 1 menu at a time, shouldnt be able to read all menus.
 // Ex: http://localhost:3000/api/menus/1
 router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var menuId, menu, sections, organizedItems, _i, sections_1, section, items, section_name, response;
+    var menuId, menu, sections, organizedItems, _i, sections_1, section, items, section_name, itemsWithIngredients, response;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -236,18 +236,31 @@ router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0
                 _i = 0, sections_1 = sections;
                 _a.label = 3;
             case 3:
-                if (!(_i < sections_1.length)) return [3 /*break*/, 6];
+                if (!(_i < sections_1.length)) return [3 /*break*/, 7];
                 section = sections_1[_i];
                 return [4 /*yield*/, getMenuItemsBySection(menuId, section.id)];
             case 4:
                 items = _a.sent();
                 section_name = section.name;
-                organizedItems.push({ section_name: section_name, items: items });
-                _a.label = 5;
+                return [4 /*yield*/, Promise.all(items.map(function (item) { return __awaiter(void 0, void 0, void 0, function () {
+                        var itemIngredients;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, getIngredientsByMenuItem(item.id)];
+                                case 1:
+                                    itemIngredients = _a.sent();
+                                    return [2 /*return*/, __assign(__assign({}, item), { ingredients: itemIngredients })];
+                            }
+                        });
+                    }); }))];
             case 5:
+                itemsWithIngredients = _a.sent();
+                organizedItems.push({ section_name: section_name, items: itemsWithIngredients });
+                _a.label = 6;
+            case 6:
                 _i++;
                 return [3 /*break*/, 3];
-            case 6:
+            case 7:
                 response = {
                     id: menu.id,
                     primaryFont: menu.primaryFont,

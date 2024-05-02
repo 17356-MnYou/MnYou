@@ -155,7 +155,11 @@ router.get("/:id", async (req: Request, res: Response) => {
   for (const section of sections) {
     const items = await getMenuItemsBySection(menuId, section.id);
     const section_name = section.name;
-    organizedItems.push({ section_name, items });
+    const itemsWithIngredients = await Promise.all(items.map(async (item) => {
+      const itemIngredients = await getIngredientsByMenuItem(item.id);
+      return { ...item, ingredients: itemIngredients };
+    }));
+    organizedItems.push({ section_name, items: itemsWithIngredients });
   }
 
   const response = {
