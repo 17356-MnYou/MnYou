@@ -10,11 +10,11 @@ const MenuDetails: React.FC = () => {
   useEffect(() => {
     const fetchMenuDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/menus/${menuId}`);
+        const response = await fetch(`${process.env.API_ENDPOINT}/menus/${menuId}`);
         if (!response.ok) throw new Error('Failed to fetch menu details: ' + response.statusText);
         const menu_data = await response.json();
         console.log(menu_data);
-  
+
         if (Array.isArray(menu_data.organizedItems)) {
           const convertedMenu = {
             ...menu_data,
