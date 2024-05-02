@@ -25,6 +25,9 @@ function MenuItemDetails(props: iStyle) {
   const navigate = useNavigate();
 
   const sampleIngredientList = ['🍅 tomato', '🧀 cheese', '🌿 basil']
+
+  const [ingredients, setIngredients] = useState([]);
+
   let { menuItemId } = useParams();
 
   const [details, setDetails] = useState<iDetails>({
@@ -52,9 +55,12 @@ function MenuItemDetails(props: iStyle) {
               secondaryTitle: data[0].secondaryTitle || '',
               price: data[0].price || '',
               description: data[0].description || '',
-              image: data[0].image || ''
+              image: data[0].image || '', 
+              ing: data.ing || '',
             };
             setDetails(newData);
+            const formattedData = newData.ing.map((item: { image: any; name: any; }) => `${item.image} ${item.name}`);
+            setIngredients(formattedData);
          })
          .catch((err) => {
             console.log(err.message);
@@ -94,7 +100,7 @@ function MenuItemDetails(props: iStyle) {
       {/* add once we have ingredient list  */}
       <h3>Ingredients:</h3>
       <div className="ingredientContainer">
-      {sampleIngredientList.map(ingredient => (
+      {ingredients.map(ingredient => (
           <span className='ingredientPill' style={{backgroundColor: storeStyle.primaryFontColor, color: 'white'}} key={ingredient} >
             {ingredient}
           </span>

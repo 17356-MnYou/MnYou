@@ -29,7 +29,6 @@ function CustomerView({
   address 
 }: CustomerViewProps) {
   const { menuId: routeMenuIdString } = useParams() as { menuId: string };
-  console.log(routeMenuIdString);
   const routeMenuId = Number(routeMenuIdString);
   const menuId = propMenuId ?? routeMenuId;
 
