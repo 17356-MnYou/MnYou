@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { db } from "../../db";
-import { menus, menuItems, sections } from "../../db/schema";
+import { menus, menuItems, sections, ingredients, menu_item_ingredients} from "../../db/schema";
 import { asc, eq } from "drizzle-orm";
 import multer from "multer";
 
@@ -125,6 +125,13 @@ async function getMenuItemsBySection(menuId: number, sectionId: number) {
     .where(eq(menuItems.menu, menuId) && eq(menuItems.section, sectionId));
 }
 
+async function getIngredientsByMenuItem(menuItemId: number) {
+  return db
+    .select()
+    .from(ingredients)
+    .where(eq(menu_item_ingredients.menu_item_id, menuItemId) && eq(menu_item_ingredients.ingredient_id, ingredients.id));
+}
+
 // READ
 // Can only receive the data from 1 menu at a time, shouldnt be able to read all menus.
 // Ex: http://localhost:3000/api/menus/1
@@ -170,7 +177,9 @@ router.get("/:mid/:iid", async (req: Request, res: Response) => {
   const menu_item = await getSpecificMenuItem(menuId, itemId);
   if (!menu_item) return res.status(500).send("No menu item found");
 
-  return res.status(200).json(menu_item);
+  const ing = await getIngredientsByMenuItem(itemId);
+
+  return res.status(200).json({...menu_item, ing});
 });
 
 router.patch("/:id", async (req: Request, res: Response) => {
