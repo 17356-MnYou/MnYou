@@ -36,7 +36,7 @@ function MenuItemDetails(props: iStyle) {
   });
 
   useEffect(() => {
-    fetch(`${process.env.API_ENDPOINT}/menus/1/${menuItemId}`)
+    fetch(`${process.env.API_ENDPOINT}/api/menus/1/${menuItemId}`)
       .then((response) => response.json())
       .then((data) => {
         const newData = {

@@ -175,7 +175,7 @@ var RestaurantView = function () {
               _a.trys.push([0, 3, , 4]);
               return [
                 4 /*yield*/,
-                fetch(`${process.env.API_ENDPOINT}/restaurants`),
+                fetch(`${process.env.API_ENDPOINT}/api/restaurants`),
               ];
             case 1:
               response = _a.sent();
@@ -223,7 +223,7 @@ var RestaurantView = function () {
             _a.trys.push([0, 3, , 4]);
             return [
               4 /*yield*/,
-              fetch(`${process.env.API_ENDPOINT}/menus/` + menu_id),
+              fetch(`${process.env.API_ENDPOINT}/api/menus/` + menu_id),
             ];
           case 1:
             response = _a.sent();
@@ -300,9 +300,12 @@ var RestaurantView = function () {
               _a.trys.push([1, 3, , 4]);
               return [
                 4 /*yield*/,
-                fetch(`${process.env.API_ENDPOINT}/restaurants/` + menu_id, {
-                  method: "DELETE",
-                }),
+                fetch(
+                  `${process.env.API_ENDPOINT}/api/restaurants/` + menu_id,
+                  {
+                    method: "DELETE",
+                  },
+                ),
               ];
             case 2:
               response = _a.sent();

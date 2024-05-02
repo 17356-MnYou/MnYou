@@ -187,7 +187,7 @@ var RestaurantForm = function () {
             _a.trys.push([1, 3, , 4]);
             return [
               4 /*yield*/,
-              fetch(`${process.env.API_ENDPOINT}/restaurants/`, {
+              fetch(`${process.env.API_ENDPOINT}/api/restaurants/`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

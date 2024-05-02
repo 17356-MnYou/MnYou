@@ -84,7 +84,7 @@ function CustomerView({
   }
 
   useEffect(() => {
-    fetch(`${process.env.API_ENDPOINT}/menus/${menuId}`)
+    fetch(`${process.env.API_ENDPOINT}/api/menus/${menuId}`)
       .then((response) => response.json())
       .then((data) => {
         setMenuData(data.organizedItems);

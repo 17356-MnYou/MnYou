@@ -90,7 +90,7 @@ const Menu: React.FC<MenuProps> = ({
   const { menuId } = useParams();
 
   const handleSaveSettings = async () => {
-    const response = await fetch(`${process.env.API_ENDPOINT}/menus/${id}`, {
+    const response = await fetch(`${process.env.API_ENDPOINT}/api/menus/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

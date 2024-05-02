@@ -20,7 +20,7 @@ function App() {
   });
   const { menuId } = useParams();
   useEffect(() => {
-    fetch(`${process.env.API_ENDPOINT}/menus/${menuId}`)
+    fetch(`${process.env.API_ENDPOINT}/api/menus/${menuId}`)
       .then((response) => response.json())
       .then((data) => {
         setStoreStyle({
