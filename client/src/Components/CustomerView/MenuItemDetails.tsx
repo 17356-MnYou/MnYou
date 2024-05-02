@@ -34,6 +34,14 @@ function MenuItemDetails(props: iStyle) {
     description: '',    
     image: ''           
   });
+
+  const [storeStyle, setStoreStyle] = useState({
+    primaryFont: '',
+    secondaryFont: '',
+    primaryFontColor: '',
+    secondaryFontColor: '',
+    backgroundColor: ''
+  });
   
   useEffect(() => {
     fetch(`http://localhost:3000/api/menus/1/${menuItemId}`)
@@ -53,14 +61,31 @@ function MenuItemDetails(props: iStyle) {
          });
   }, []);
 
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/menus/1`)
+         .then((response) => response.json())
+         .then((data) => {
+            setStoreStyle({
+              primaryFont: data.primaryFont,
+              secondaryFont: data.secondaryFont,
+              primaryFontColor: data.primaryFontColor,
+              secondaryFontColor: data.secondaryFontColor,
+              backgroundColor: data.backgroundColor
+            });
+         })
+         .catch((err) => {
+            console.log(err.message);
+         });
+  }, []);
+
   function navigateToMainMenu(){ 
     //should be whichever menu item we need but can come back to later
     navigate(`/customer/1`);
   }
 
   return (    
-    <div className="menuItemDetailsBox" style={{textAlign: 'left', fontFamily: props.style.primaryFont, backgroundColor: props.style.backgroundColor, color: props.style.primaryFontColor}}>
-    <button onClick={navigateToMainMenu}>Back to menu</button>
+    <div className="menuItemDetailsBox" style={{textAlign: 'left', fontFamily: storeStyle.primaryFont, backgroundColor: storeStyle.backgroundColor, color: storeStyle.primaryFontColor}}>
+    <button style={{fontFamily: storeStyle.primaryFont}} onClick={navigateToMainMenu}>Back to menu</button>
       <h1>{details.title}</h1>
       <p>{details.secondaryTitle}</p>
       <img className="detailImg" src={`/${details.image}`}></img>
@@ -70,7 +95,7 @@ function MenuItemDetails(props: iStyle) {
       <h3>Ingredients:</h3>
       <div className="ingredientContainer">
       {sampleIngredientList.map(ingredient => (
-          <span className='ingredientPill' style={{backgroundColor: props.style.primaryFontColor}} key={ingredient} >
+          <span className='ingredientPill' style={{backgroundColor: storeStyle.primaryFontColor, color: 'white'}} key={ingredient} >
             {ingredient}
           </span>
       ))}

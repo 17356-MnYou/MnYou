@@ -98,6 +98,7 @@ function CustomerView({
               backgroundColor: backgroundColor || data.backgroundColor
             });
             setFilteredMenuItems(data.organizedItems);
+            console.log("items: ", data.organizedItems);
          })
          .catch((err) => {
             console.log(err.message);
@@ -158,7 +159,7 @@ function CustomerView({
       })}
       </div>
     </Dialog>
-    <div style={{ textAlign: 'left',fontFamily: storeStyle.primaryFont, backgroundColor: storeStyle.backgroundColor, color: storeStyle.primaryFontColor}}>
+    <div style={{ textAlign: 'left',fontFamily: `${storeStyle.primaryFont}`, backgroundColor: storeStyle.backgroundColor, color: storeStyle.primaryFontColor}}>
       <h1>{storeName}</h1>
       <p>{storeAddress}</p>
       <div style={{ background: storeStyle.secondaryFontColor }} className="line-separator"></div>
@@ -171,12 +172,12 @@ function CustomerView({
       />
       <div className="filterContainer">
         {filters.map((filterName) => { 
-          return <button key={filterName} style={{ background: storeStyle.secondaryFontColor }}>{filterName}</button>
+          return <button key={filterName} style={{ background: storeStyle.secondaryFontColor, fontFamily: `${storeStyle.primaryFont}`, color: 'white'}}>{filterName}</button>
         })}
-        <button onClick={handleOpen}>+ Filter</button>
+        <button style={{fontFamily: `${storeStyle.primaryFont}`}} onClick={handleOpen}>+ Filter</button>
       </div>
       {filteredMenuItems ? filteredMenuItems.map((item: any, index) => (
-        <Section key={item.section_name} sectionTitle={item.section_name} items={item.items} />
+        <Section style={storeStyle} key={item.section_name} sectionTitle={item.section_name} items={item.items} />
       )) : <p>Loading menu...</p>}
     </div>
     </div>
