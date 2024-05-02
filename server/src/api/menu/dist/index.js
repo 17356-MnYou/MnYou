@@ -195,13 +195,19 @@ function getMenuItemsBySection(menuId, sectionId) {
         });
     });
 }
+// SELECT name, image
+// FROM ingredients
+// LEFT JOIN menu_item_ingredients
+//   ON ingredient_id = id
+// WHERE menu_item_id = 3
 function getIngredientsByMenuItem(menuItemId) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/, db_1.db
-                    .select()
+                    .select({ name: schema_1.ingredients.name, image: schema_1.ingredients.image })
                     .from(schema_1.ingredients)
-                    .where(drizzle_orm_1.eq(schema_1.menu_item_ingredients.menu_item_id, menuItemId) && drizzle_orm_1.eq(schema_1.menu_item_ingredients.ingredient_id, schema_1.ingredients.id))];
+                    .leftJoin(schema_1.menu_item_ingredients, drizzle_orm_1.eq(schema_1.menu_item_ingredients.ingredientId, schema_1.ingredients.id))
+                    .where(drizzle_orm_1.eq(schema_1.menu_item_ingredients.menuItemId, menuItemId))];
         });
     });
 }

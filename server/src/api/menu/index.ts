@@ -124,12 +124,18 @@ async function getMenuItemsBySection(menuId: number, sectionId: number) {
     .from(menuItems)
     .where(eq(menuItems.menu, menuId) && eq(menuItems.section, sectionId));
 }
+// SELECT name, image
+// FROM ingredients
+// LEFT JOIN menu_item_ingredients
+//   ON ingredient_id = id
+// WHERE menu_item_id = 3
 
 async function getIngredientsByMenuItem(menuItemId: number) {
   return db
-    .select()
+    .select({name: ingredients.name, image: ingredients.image})
     .from(ingredients)
-    .where(eq(menu_item_ingredients.menu_item_id, menuItemId) && eq(menu_item_ingredients.ingredient_id, ingredients.id));
+    .leftJoin(menu_item_ingredients, eq(menu_item_ingredients.ingredientId, ingredients.id))
+    .where(eq(menu_item_ingredients.menuItemId, menuItemId));
 }
 
 // READ

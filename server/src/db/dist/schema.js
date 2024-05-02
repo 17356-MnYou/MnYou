@@ -92,12 +92,10 @@ exports.sectionRelations = drizzle_orm_1.relations(exports.sections, function (_
     });
 });
 exports.menu_item_ingredients = pg_core_5.pgTable("menu_item_ingredients", {
-    menu_item_id: pg_core_4.integer("menu_item")
-        .references(function () { return exports.menuItems.id; })
-        .notNull(),
-    ingredient_id: pg_core_4.integer("ingredient")
+    menuItemId: pg_core_4.integer("menu_item_id")
+        .references(function () { return exports.menuItems.id; }),
+    ingredientId: pg_core_4.integer("ingredient_id")
         .references(function () { return exports.ingredients.id; })
-        .notNull()
 });
 exports.ingredients = pg_core_5.pgTable("ingredients", {
     id: pg_core_5.serial("id").primaryKey(),

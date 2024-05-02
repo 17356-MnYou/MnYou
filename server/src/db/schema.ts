@@ -87,12 +87,10 @@ export const sectionRelations = relations(sections, ({ one, many }) => ({
 }));
 
 export const menu_item_ingredients = pgTable("menu_item_ingredients", {
-  menu_item_id: integer("menu_item")
-    .references(() => menuItems.id)
-    .notNull(),
-  ingredient_id: integer("ingredient")
+  menuItemId: integer("menu_item_id")
+    .references(() => menuItems.id),
+  ingredientId: integer("ingredient_id")
     .references(() => ingredients.id)
-    .notNull(),
 });
 
 export const ingredients = pgTable("ingredients", {
