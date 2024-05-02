@@ -101,7 +101,7 @@ const RestaurantView: React.FC = () => {
                   <td>
                     <QRCode
                       id={'qr' + menu.id}
-                      value={'http://localhost:3000/restaurant/' + menu.id}
+                      value={`${process.env.API_ENDPOINT}/restaurant/` + menu.id}
                       size={128}
                       level={'H'}
                     />
