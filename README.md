@@ -28,6 +28,9 @@ Run `npm install`
 If you are running this locally for development, you can use any `postgres` database like `psql` or
 any online solution.
 
+**Production Database:** _If you want to see the data used in our presentation demo, use this as your
+`postgres connection string`: `postgres://ejfkadic:jnzCrK03bLFePMhH5BU36JdmsXf2QwTw@isilo.db.elephantsql.com/ejfkadic`
+
 Make sure that `./server/.env` file has all of the environment variables set. You can find the `.env.example`
 file in `./server/.env.example`.
 
