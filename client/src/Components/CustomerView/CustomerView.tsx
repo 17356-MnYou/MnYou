@@ -126,14 +126,12 @@ function CustomerView({
       }
     });
        
-    //replace testIngredients with actual list of ingredients
-    let testIngredients = ['chicken'];
-    //apply the filtering logic across the menu items
-    const filtered = menuData.map(section => ({
+     //apply the filtering logic across the menu items
+     const filtered = menuData.map(section => ({
       ...section,
       items: section.items.filter((item: { ingredients: any[]; }) => {
-        // Log each item's ingredients to verify
-        return !testIngredients.some(element => filterList.includes(element));
+        //check if any ingredient in the item is in the filterList
+        return !item.ingredients.some(ingredient => filterList.includes(ingredient.name.toLowerCase()));
       })
     })).filter(section => section.items.length > 0);
   
@@ -151,14 +149,14 @@ function CustomerView({
         return <FilterButton style={storeStyle} filters={filters} setFilters={setFilters} key={index} name={option}/>
       })}
       </div>
-      <p style={{marginLeft: 0}}>Ingredient restrictions:</p>
+      {/* <p style={{marginLeft: 0}}>Ingredient restrictions:</p>
       <div className="buttonContainer">
       {ingredientPreferences.map((option, index) => { 
         return <FilterButton style={storeStyle} filters={filters} setFilters={setFilters} key={index} name={option}/>
       })}
-      </div>
+      </div> */}
     </Dialog>
-    <div style={{ textAlign: 'left',fontFamily: `${storeStyle.primaryFont}`, backgroundColor: storeStyle.backgroundColor, color: storeStyle.primaryFontColor}}>
+    <div style={{ textAlign: 'left',fontFamily: `${storeStyle.primaryFont}`, backgroundColor: storeStyle.backgroundColor, color: storeStyle.primaryFontColor, minHeight: '100vh'}}>
       <h1>{storeName}</h1>
       <p>{storeAddress}</p>
       <div style={{ background: storeStyle.secondaryFontColor }} className="line-separator"></div>
