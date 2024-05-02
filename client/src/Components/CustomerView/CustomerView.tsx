@@ -69,7 +69,7 @@ function CustomerView({
   const filterDetails: FilterDetails = {
     vegan: ['meat', 'chicken', 'beef', 'fish', 'cheese', 'rice'],
     vegetarian: ['meat', 'chicken', 'beef', 'fish'],
-    pescetarian: ['meat', 'chicken', 'beef'],
+    pescetarian: ['fish', 'shrimp', 'crab'],
     dairyFree: ['cheese', 'milk', 'yogurt']
   };
   const ingredientPreferences = ['no olives', 'no broccoli', 'no eggs', 'no cabbage', 'no peppers']
@@ -114,6 +114,33 @@ function CustomerView({
     setFilteredMenuItems(filtered);
   }, [search, menuData]);  
 
+  //needs to be updated once we have proper ingredients for each item
+  useEffect(() => {
+    let filterList: string[] = [];
+  
+    //collect ingredients to exclude based on active filters
+    filters.forEach((filter) => {
+      if (filterDetails[filter]) {
+        filterList.push(...filterDetails[filter].map(ingredient => ingredient.toLowerCase()));
+      } else {
+      }
+    });
+       
+    //replace testIngredients with actual list of ingredients
+    let testIngredients = ['chicken'];
+    //apply the filtering logic across the menu items
+    const filtered = menuData.map(section => ({
+      ...section,
+      items: section.items.filter((item: { ingredients: any[]; }) => {
+        // Log each item's ingredients to verify
+        return !testIngredients.some(element => filterList.includes(element));
+      })
+    })).filter(section => section.items.length > 0);
+  
+    setFilteredMenuItems(filtered);
+  }, [filters, menuData]);
+  
+
   return (
     <div style={{ backgroundColor }}>
     <Dialog onClose={handleClose} open={open}>
@@ -144,11 +171,11 @@ function CustomerView({
       />
       <div className="filterContainer">
         {filters.map((filterName) => { 
-          return <button style={{ background: storeStyle.secondaryFontColor }}>{filterName}</button>
+          return <button key={filterName} style={{ background: storeStyle.secondaryFontColor }}>{filterName}</button>
         })}
         <button onClick={handleOpen}>+ Filter</button>
       </div>
-      {filteredMenuItems ? filteredMenuItems.map((item: any) => (
+      {filteredMenuItems ? filteredMenuItems.map((item: any, index) => (
         <Section key={item.section_name} sectionTitle={item.section_name} items={item.items} />
       )) : <p>Loading menu...</p>}
     </div>

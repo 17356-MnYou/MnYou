@@ -21,9 +21,9 @@ function Section({ sectionTitle, items }: SectionProps) {
     <div className="menuSection">
       <h2 className="header">{sectionTitle}</h2>
       <div className="itemList">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <MenuItem
-            key={item.id}
+            key={index}
             id={item.id}
             title={item.title}
             description={item.description}
