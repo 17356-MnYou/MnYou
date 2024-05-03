@@ -17,7 +17,6 @@ function FilterButton(props: iFilterButton) {
 
     // Function to toggle the state
     function toggleClassName() {
-        console.log("set className")
         setIsActive(!isActive);
         if(!isActive){
             let arr = [...props.filters]; 

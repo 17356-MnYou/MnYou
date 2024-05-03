@@ -29,7 +29,6 @@ function CustomerView({
   address
 }: CustomerViewProps) {
   const { menuId: routeMenuIdString } = useParams() as { menuId: string };
-  console.log(routeMenuIdString);
   const routeMenuId = Number(routeMenuIdString);
   const menuId = propMenuId ?? routeMenuId;
 
@@ -69,7 +68,7 @@ function CustomerView({
   const filterDetails: FilterDetails = {
     vegan: ['meat', 'chicken', 'beef', 'fish', 'cheese', 'rice'],
     vegetarian: ['meat', 'chicken', 'beef', 'fish'],
-    pescetarian: ['meat', 'chicken', 'beef'],
+    pescetarian: ['fish', 'shrimp', 'crab'],
     dairyFree: ['cheese', 'milk', 'yogurt']
   };
   const ingredientPreferences = ['no olives', 'no broccoli', 'no eggs', 'no cabbage', 'no peppers']
@@ -112,46 +111,71 @@ function CustomerView({
       items: section.items.filter((item: { title: string; }) => item.title?.toLowerCase().includes(search.toLowerCase()))
     })).filter(section => section.items.length > 0);
     setFilteredMenuItems(filtered);
-  }, [search, menuData]);
+  }, [search, menuData]);  
+
+  //needs to be updated once we have proper ingredients for each item
+  useEffect(() => {
+    let filterList: string[] = [];
+  
+    //collect ingredients to exclude based on active filters
+    filters.forEach((filter) => {
+      if (filterDetails[filter]) {
+        filterList.push(...filterDetails[filter].map(ingredient => ingredient.toLowerCase()));
+      } else {
+      }
+    });
+       
+     //apply the filtering logic across the menu items
+     const filtered = menuData.map(section => ({
+      ...section,
+      items: section.items.filter((item: { ingredients: any[]; }) => {
+        //check if any ingredient in the item is in the filterList
+        return !item.ingredients.some(ingredient => filterList.includes(ingredient.name.toLowerCase()));
+      })
+    })).filter(section => section.items.length > 0);
+  
+    setFilteredMenuItems(filtered);
+  }, [filters, menuData]);
+  
 
   return (
     <div style={{ backgroundColor }}>
-      <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>Select filters</DialogTitle>
-        <p style={{ marginLeft: 0 }}>Dietary restrictions:</p>
-        <div className="buttonContainer">
-          {dietaryPreferences.map((option, index) => {
-            return <FilterButton style={storeStyle} filters={filters} setFilters={setFilters} key={index} name={option} />
-          })}
-        </div>
-        <p style={{ marginLeft: 0 }}>Ingredient restrictions:</p>
-        <div className="buttonContainer">
-          {ingredientPreferences.map((option, index) => {
-            return <FilterButton style={storeStyle} filters={filters} setFilters={setFilters} key={index} name={option} />
-          })}
-        </div>
-      </Dialog>
-      <div style={{ textAlign: 'left', fontFamily: storeStyle.primaryFont, backgroundColor: storeStyle.backgroundColor, color: storeStyle.primaryFontColor }}>
-        <h1>{storeName}</h1>
-        <p>{storeAddress}</p>
-        <div style={{ background: storeStyle.secondaryFontColor }} className="line-separator"></div>
-        <input
-          className="searchBar"
-          type="text"
-          placeholder="Search"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        <div className="filterContainer">
-          {filters.map((filterName) => {
-            return <button style={{ background: storeStyle.secondaryFontColor }}>{filterName}</button>
-          })}
-          <button onClick={handleOpen}>+ Filter</button>
-        </div>
-        {filteredMenuItems ? filteredMenuItems.map((item: any) => (
-          <Section key={item.section_name} sectionTitle={item.section_name} items={item.items} />
-        )) : <p>Loading menu...</p>}
+    <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>Select filters</DialogTitle>
+      <p style={{marginLeft: 0}}>Dietary restrictions:</p>
+      <div className="buttonContainer">
+      {dietaryPreferences.map((option, index) => { 
+        return <FilterButton style={storeStyle} filters={filters} setFilters={setFilters} key={index} name={option}/>
+      })}
       </div>
+      {/* <p style={{marginLeft: 0}}>Ingredient restrictions:</p>
+      <div className="buttonContainer">
+      {ingredientPreferences.map((option, index) => { 
+        return <FilterButton style={storeStyle} filters={filters} setFilters={setFilters} key={index} name={option}/>
+      })}
+      </div> */}
+    </Dialog>
+    <div style={{ textAlign: 'left',fontFamily: `${storeStyle.primaryFont}`, backgroundColor: storeStyle.backgroundColor, color: storeStyle.primaryFontColor, minHeight: '100vh'}}>
+      <h1>{storeName}</h1>
+      <p>{storeAddress}</p>
+      <div style={{ background: storeStyle.secondaryFontColor }} className="line-separator"></div>
+      <input
+        className="searchBar"
+        type="text"
+        placeholder="Search"
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+      />
+      <div className="filterContainer">
+        {filters.map((filterName) => { 
+          return <button key={filterName} style={{ background: storeStyle.secondaryFontColor, fontFamily: `${storeStyle.primaryFont}`, color: 'white'}}>{filterName}</button>
+        })}
+        <button style={{fontFamily: `${storeStyle.primaryFont}`}} onClick={handleOpen}>+ Filter</button>
+      </div>
+      {filteredMenuItems ? filteredMenuItems.map((item: any, index) => (
+        <Section style={storeStyle} key={item.section_name} sectionTitle={item.section_name} items={item.items} />
+      )) : <p>Loading menu...</p>}
+    </div>
     </div>
   );
 }

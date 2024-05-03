@@ -15,10 +15,12 @@
     border-radius: 10px;
     width: 90vw;
     object-fit: cover;
+    max-width: 300px;
+    max-height: 300px;;
 }
 
 .detailText { 
-    max-width: 90vw;
+    max-width: 300px;
 }
 
 .ingredientPill { 
@@ -38,5 +40,5 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    max-width: 90vw;
+    max-width: 300px;
 }

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { db } from "../../db";
-import { menus, menuItems, sections } from "../../db/schema";
+import { menus, menuItems, sections, ingredients, menu_item_ingredients} from "../../db/schema";
 import { asc, eq } from "drizzle-orm";
 import multer from "multer";
 
@@ -124,6 +124,19 @@ async function getMenuItemsBySection(menuId: number, sectionId: number) {
     .from(menuItems)
     .where(eq(menuItems.menu, menuId) && eq(menuItems.section, sectionId));
 }
+// SELECT name, image
+// FROM ingredients
+// LEFT JOIN menu_item_ingredients
+//   ON ingredient_id = id
+// WHERE menu_item_id = 3
+
+async function getIngredientsByMenuItem(menuItemId: number) {
+  return db
+    .select({name: ingredients.name, image: ingredients.image})
+    .from(ingredients)
+    .leftJoin(menu_item_ingredients, eq(menu_item_ingredients.ingredientId, ingredients.id))
+    .where(eq(menu_item_ingredients.menuItemId, menuItemId));
+}
 
 // READ
 // Can only receive the data from 1 menu at a time, shouldnt be able to read all menus.
@@ -142,7 +155,11 @@ router.get("/:id", async (req: Request, res: Response) => {
   for (const section of sections) {
     const items = await getMenuItemsBySection(menuId, section.id);
     const section_name = section.name;
-    organizedItems.push({ section_name, items });
+    const itemsWithIngredients = await Promise.all(items.map(async (item) => {
+      const itemIngredients = await getIngredientsByMenuItem(item.id);
+      return { ...item, ingredients: itemIngredients };
+    }));
+    organizedItems.push({ section_name, items: itemsWithIngredients });
   }
 
   const response = {
@@ -170,7 +187,9 @@ router.get("/:mid/:iid", async (req: Request, res: Response) => {
   const menu_item = await getSpecificMenuItem(menuId, itemId);
   if (!menu_item) return res.status(500).send("No menu item found");
 
-  return res.status(200).json(menu_item);
+  const ing = await getIngredientsByMenuItem(itemId);
+
+  return res.status(200).json({...menu_item, ing});
 });
 
 router.patch("/:id", async (req: Request, res: Response) => {

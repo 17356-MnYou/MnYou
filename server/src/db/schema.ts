@@ -86,6 +86,13 @@ export const sectionRelations = relations(sections, ({ one, many }) => ({
   }),
 }));
 
+export const menu_item_ingredients = pgTable("menu_item_ingredients", {
+  menuItemId: integer("menu_item_id")
+    .references(() => menuItems.id),
+  ingredientId: integer("ingredient_id")
+    .references(() => ingredients.id)
+});
+
 export const ingredients = pgTable("ingredients", {
   id: serial("id").primaryKey(),
   name: text("name"),
