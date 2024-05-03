@@ -90,7 +90,7 @@ const Menu: React.FC<MenuProps> = ({
   const { menuId } = useParams();
 
   const handleSaveSettings = async () => {
-    const response = await fetch(`http://localhost:3000/api/menus/${id}`, {
+    const response = await fetch(`${process.env.API_ENDPOINT}/api/menus/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const Menu: React.FC<MenuProps> = ({
         address: addressState,
       }),
     });
-  
+
     if (response.ok) {
       localStorage.setItem(`backgroundColor-${id}`, color);
       localStorage.setItem(`primaryFont-${id}`, font);
@@ -116,7 +116,7 @@ const Menu: React.FC<MenuProps> = ({
       localStorage.setItem(`orientation-${id}`, orientationState.toString());
       localStorage.setItem(`name-${id}`, nameState);
       localStorage.setItem(`address-${id}`, addressState);
-  
+
       // Update the state to reflect the new settings
       setFont(font);
       setSecondaryFont(secondaryFontState);
@@ -142,8 +142,8 @@ const Menu: React.FC<MenuProps> = ({
         <div className="View">
           <h2 className="customerView">Customer View</h2>
           <div className="customer-view-container">
-            <CustomerView 
-              menuId={menuId ? Number(menuId) : undefined} 
+            <CustomerView
+              menuId={menuId ? Number(menuId) : undefined}
               primaryFont={font}
               secondaryFont={secondaryFontState}
               primaryFontColor={primaryFontColorState}

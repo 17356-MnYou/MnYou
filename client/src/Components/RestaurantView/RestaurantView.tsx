@@ -15,7 +15,7 @@ const RestaurantView: React.FC = () => {
   useEffect(() => {
     const fetchMenus = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/restaurants');
+        const response = await fetch(`${process.env.API_ENDPOINT}/api/restaurants`);
         const data = await response.json();
         console.log(data);
         setMenus(data);
@@ -52,7 +52,7 @@ const RestaurantView: React.FC = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this menu?");
     if (confirmDelete) {
       try {
-        const response = await fetch(`http://localhost:3000/api/restaurants/${menu_id}`, {
+        const response = await fetch(`${process.env.API_ENDPOINT}/api/restaurants/${menu_id}`, {
           method: 'DELETE',
         });
         if (!response.ok) throw new Error('Failed to delete menu: ' + response.statusText);
@@ -72,7 +72,7 @@ const RestaurantView: React.FC = () => {
     <div>
       <Navbar />
       {newMenu ? (
-        <RestaurantForm/>
+        <RestaurantForm />
       ) : (
         <div>
           <Table className="Table" striped bordered hover>
@@ -99,12 +99,12 @@ const RestaurantView: React.FC = () => {
                   <td>{menu.username}</td>
                   <td>{menu.password}</td>
                   <td>
-                      <QRCode
-                        id={'qr' + menu.id}
-                        value={'http://localhost:3000/restaurant/' + menu.id}
-                        size={128}
-                        level={'H'}
-                      />
+                    <QRCode
+                      id={'qr' + menu.id}
+                      value={`${process.env.API_ENDPOINT}/restaurant/` + menu.id}
+                      size={128}
+                      level={'H'}
+                    />
                   </td>
                   <td>
                     <Button className="view-menu-button" onClick={() => handleMenuClick(menu.id)}>
