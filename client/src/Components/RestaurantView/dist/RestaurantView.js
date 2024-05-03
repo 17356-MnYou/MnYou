@@ -175,7 +175,7 @@ var RestaurantView = function () {
               _a.trys.push([0, 3, , 4]);
               return [
                 4 /*yield*/,
-                fetch(`${process.env.API_ENDPOINT}/api/restaurants`),
+                fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/restaurants`),
               ];
             case 1:
               response = _a.sent();
@@ -223,7 +223,7 @@ var RestaurantView = function () {
             _a.trys.push([0, 3, , 4]);
             return [
               4 /*yield*/,
-              fetch(`${process.env.API_ENDPOINT}/api/menus/` + menu_id),
+              fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/menus/` + menu_id),
             ];
           case 1:
             response = _a.sent();
@@ -301,7 +301,7 @@ var RestaurantView = function () {
               return [
                 4 /*yield*/,
                 fetch(
-                  `${process.env.API_ENDPOINT}/api/restaurants/` + menu_id,
+                  `${process.env.REACT_APP_API_ENDPOINT}/api/restaurants/` + menu_id,
                   {
                     method: "DELETE",
                   },
@@ -417,7 +417,7 @@ var RestaurantView = function () {
                         {
                           id: "qr" + menu.id,
                           value:
-                            `${process.env.API_ENDPOINT}/restaurant/` + menu.id,
+                            `${process.env.REACT_APP_API_ENDPOINT}/restaurant/` + menu.id,
                           size: 128,
                           level: "H",
                         },

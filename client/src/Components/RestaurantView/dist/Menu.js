@@ -254,7 +254,7 @@ var Menu = function (_a) {
           case 0:
             return [
               4 /*yield*/,
-              fetch(`${process.env.API_ENDPOINT}/api/menus/` + id, {
+              fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/menus/` + id, {
                 method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",

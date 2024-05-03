@@ -25,7 +25,7 @@ const RestaurantForm = () => {
   const handleFormSubmit = async (event: any) => {
     event.preventDefault();
     try {
-      const response = await fetch(`${process.env.API_ENDPOINT}/api/restaurants/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/restaurants/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ const MenuDetails: React.FC = () => {
   useEffect(() => {
     const fetchMenuDetails = async () => {
       try {
-        const response = await fetch(`${process.env.API_ENDPOINT}/api/menus/${menuId}`);
+        const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/menus/${menuId}`);
         if (!response.ok) throw new Error('Failed to fetch menu details: ' + response.statusText);
         const menu_data = await response.json();
         console.log(menu_data);
