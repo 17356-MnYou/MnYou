@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
 import { Form, Button } from 'react-bootstrap';
-import { MenuProps } from './Menu';
 import './RestaurantView.css';
 
 const RestaurantForm = () => {
@@ -26,7 +25,7 @@ const RestaurantForm = () => {
   const handleFormSubmit = async (event: any) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/restaurants/', {
+      const response = await fetch(`${process.env.API_ENDPOINT}/api/restaurants/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

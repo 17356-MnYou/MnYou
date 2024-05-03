@@ -17,16 +17,16 @@ interface CustomerViewProps {
   address?: string;
 }
 
-function CustomerView({ 
-  menuId: propMenuId, 
-  backgroundColor, 
-  primaryFont, 
-  secondaryFont, 
-  primaryFontColor, 
-  secondaryFontColor, 
-  orientation, 
-  name, 
-  address 
+function CustomerView({
+  menuId: propMenuId,
+  backgroundColor,
+  primaryFont,
+  secondaryFont,
+  primaryFontColor,
+  secondaryFontColor,
+  orientation,
+  name,
+  address
 }: CustomerViewProps) {
   const { menuId: routeMenuIdString } = useParams() as { menuId: string };
   const routeMenuId = Number(routeMenuIdString);
@@ -41,11 +41,11 @@ function CustomerView({
 
   const [menuData, setMenuData] = useState<any[]>([]);
 
-  const [filteredMenuItems, setFilteredMenuItems] = useState<any[]>([]); 
+  const [filteredMenuItems, setFilteredMenuItems] = useState<any[]>([]);
 
-  const [storeName, setStoreName] = useState(""); 
+  const [storeName, setStoreName] = useState("");
 
-  const [storeAddress, setStoreAddress] = useState(""); 
+  const [storeAddress, setStoreAddress] = useState("");
 
   const [storeStyle, setStoreStyle] = useState({
     primaryFont: '',
@@ -55,7 +55,7 @@ function CustomerView({
     backgroundColor: ''
   });
 
-  const [open, setOpen] = useState(false); 
+  const [open, setOpen] = useState(false);
 
   const [filters, setFilters] = useState([]);
 
@@ -74,34 +74,33 @@ function CustomerView({
   const ingredientPreferences = ['no olives', 'no broccoli', 'no eggs', 'no cabbage', 'no peppers']
 
 
-  function handleClose() { 
+  function handleClose() {
     setOpen(false);
   }
 
-  function handleOpen() { 
+  function handleOpen() {
     setOpen(true);
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/menus/${menuId}`)
-         .then((response) => response.json())
-         .then((data) => {
-            setMenuData(data.organizedItems);
-            setStoreName(name || data.name); 
-            setStoreAddress(address || data.address);
-            setStoreStyle({
-              primaryFont: primaryFont || data.primaryFont,
-              secondaryFont: secondaryFont || data.secondaryFont,
-              primaryFontColor: primaryFontColor || data.primaryFontColor,
-              secondaryFontColor: secondaryFontColor || data.secondaryFontColor,
-              backgroundColor: backgroundColor || data.backgroundColor
-            });
-            setFilteredMenuItems(data.organizedItems);
-            console.log("items: ", data.organizedItems);
-         })
-         .catch((err) => {
-            console.log(err.message);
-         });
+    fetch(`${process.env.API_ENDPOINT}/api/menus/${menuId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setMenuData(data.organizedItems);
+        setStoreName(name || data.name);
+        setStoreAddress(address || data.address);
+        setStoreStyle({
+          primaryFont: primaryFont || data.primaryFont,
+          secondaryFont: secondaryFont || data.secondaryFont,
+          primaryFontColor: primaryFontColor || data.primaryFontColor,
+          secondaryFontColor: secondaryFontColor || data.secondaryFontColor,
+          backgroundColor: backgroundColor || data.backgroundColor
+        });
+        setFilteredMenuItems(data.organizedItems);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }, [menuId, backgroundColor, primaryFont, secondaryFont, primaryFontColor, secondaryFontColor, orientation, name, address]);
 
   const [search, setSearch] = useState('');
